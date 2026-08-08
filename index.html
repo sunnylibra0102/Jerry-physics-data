@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>初中物理知识树 · 浙江中考版</title>
+<style>
+/* ================= 基础与主题 ================= */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#040b1c; --bg2:#081431; --panel:rgba(13,27,58,.82); --panel2:rgba(9,18,40,.92);
+  --line:rgba(0,229,255,.16); --line2:rgba(0,229,255,.35);
+  --cy:#00e5ff; --bl:#4d8dff; --pu:#b388ff; --or:#ffd166; --rd:#ff5d73; --gn:#69f0ae;
+  --tx:#e8f2ff; --tx2:#9db4d8; --tx3:#5f7699;
+  --r:16px; --shadow:0 8px 32px rgba(0,0,0,.45);
+}
+html{font-size:16px}
+body{
+  background:var(--bg); color:var(--tx); min-height:100vh;
+  font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+  overflow-x:hidden;
+}
+/* 星空背景 */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(77,141,255,.18), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(179,136,255,.12), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 50% 110%, rgba(0,229,255,.08), transparent 60%),
+    var(--bg);
+}
+#stars i{position:absolute;border-radius:50%;background:#cfe9ff;animation:twinkle var(--d,3s) ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.9}}
+.grid-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(0,229,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.045) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 75%);
+}
+/* ================= 布局 ================= */
+#app{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:14px 14px calc(90px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;gap:10px;padding:8px 2px 14px}
+.logo{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:24px;
+  background:linear-gradient(135deg,rgba(0,229,255,.25),rgba(77,141,255,.25));
+  border:1px solid var(--line2);box-shadow:0 0 18px rgba(0,229,255,.25) inset}
+header h1{font-size:19px;letter-spacing:1px;font-weight:700;
+  background:linear-gradient(90deg,#fff,var(--cy));-webkit-background-clip:text;background-clip:text;color:transparent}
+header .sub{font-size:11px;color:var(--tx3);letter-spacing:2px;margin-top:2px}
+.hdr-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;
+  font-size:12px;border:1px solid var(--line);background:rgba(0,229,255,.06);color:var(--cy);white-space:nowrap}
+.chip.off{color:var(--tx3);border-color:rgba(120,140,180,.25);background:rgba(120,140,180,.08)}
+.view{display:none;animation:fadeIn .35s ease}
+.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2.sec{font-size:14px;color:var(--tx2);letter-spacing:3px;margin:20px 4px 10px;display:flex;align-items:center;gap:8px}
+h2.sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+/* ================= 卡片通用 ================= */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);backdrop-filter:blur(6px)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;
+  padding:14px 22px;border-radius:14px;font-size:15px;font-weight:600;color:#03121f;letter-spacing:1px;
+  background:linear-gradient(135deg,var(--cy),var(--bl));
+  box-shadow:0 4px 18px rgba(0,229,255,.35);transition:transform .12s ease,box-shadow .12s ease;min-height:48px}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:rgba(0,229,255,.08);color:var(--cy);border:1px solid var(--line2);box-shadow:none}
+.btn.small{padding:9px 14px;font-size:13px;min-height:40px;border-radius:11px}
+.btn.danger{background:rgba(255,93,115,.12);color:var(--rd);border:1px solid rgba(255,93,115,.4);box-shadow:none}
+.btn.done{background:linear-gradient(135deg,var(--gn),#2ecf8d)}
+/* ================= 首页 ================= */
+.hero{padding:18px;position:relative;overflow:hidden}
+.hero .ring-wrap{display:flex;gap:16px;align-items:center}
+.ring{position:relative;width:86px;height:86px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring .val{position:absolute;inset:0;display:grid;place-items:center;font-size:19px;font-weight:700;color:var(--cy)}
+.ring .val small{font-size:9px;color:var(--tx3);display:block;text-align:center}
+.hero h3{font-size:17px;margin-bottom:4px}
+.hero p{font-size:12px;color:var(--tx2);line-height:1.6}
+/* —— 一图掌握：模块信息卡 —— */
+.mod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.map-card{overflow:hidden;cursor:pointer;transition:transform .15s ease}
+.map-card:active{transform:scale(.97)}
+.map-h{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#03121f;font-weight:700;font-size:15px}
+.map-h b{width:22px;height:22px;border-radius:7px;background:rgba(3,18,31,.85);color:#fff;display:grid;place-items:center;font-size:12px;flex:none}
+.map-h .mh-ic{margin-left:auto;font-size:18px}
+.map-b{padding:10px 12px 12px}
+.map-b .brief{font-size:11px;color:var(--tx2);line-height:1.6;min-height:35px}
+.fchips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.fchip{font:11px Consolas,monospace;color:var(--or);border:1px solid rgba(255,209,102,.4);background:rgba(255,209,102,.08);border-radius:8px;padding:3px 8px}
+.modf{padding:12px 14px;margin-bottom:12px}
+.modf h5{font-size:12px;color:var(--or);letter-spacing:2px;margin-bottom:8px}
+.map-b .bar,.mod-card .bar{height:5px;border-radius:4px;background:rgba(255,255,255,.07);margin-top:8px;overflow:hidden}
+.map-b .bar b,.mod-card .bar b{display:block;height:100%;border-radius:4px;width:0;transition:width .6s ease}
+.map-b .pct,.mod-card .pct{font-size:11px;color:var(--cy);margin-top:6px;font-family:Consolas,monospace}
+.mod-card{padding:16px 14px;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s ease,border-color .15s ease}
+.mod-card:active{transform:scale(.97);border-color:var(--line2)}
+.mod-card .ic{font-size:30px;filter:drop-shadow(0 0 10px rgba(0,229,255,.4))}
+.mod-card h4{font-size:16px;margin:8px 0 2px}
+.mod-card p{font-size:11px;color:var(--tx3);line-height:1.5;min-height:32px}
+.mod-card::before{content:"";position:absolute;top:-30px;right:-30px;width:90px;height:90px;border-radius:50%;
+  background:radial-gradient(circle,var(--mc,rgba(0,229,255,.16)),transparent 70%)}
+/* —— 考情面板 —— */
+.panel{padding:14px;margin-bottom:12px}
+.panel .ph{font-size:13.5px;letter-spacing:1px;color:var(--cy);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.panel .ph::before{content:"";width:4px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--cy),var(--bl))}
+.donut-row{display:flex;gap:14px;align-items:center}
+.donut-svg{width:132px;flex:none}
+.donut-svg .d1{font:bold 13px "PingFang SC",sans-serif;fill:var(--tx2);text-anchor:middle}
+.donut-svg .d2{font:bold 16px Consolas,monospace;fill:var(--cy);text-anchor:middle}
+.dleg{list-style:none;flex:1}
+.dleg li{display:flex;align-items:center;gap:7px;font-size:11.5px;padding:3.5px 0}
+.dleg i{width:9px;height:9px;border-radius:3px;flex:none}
+.dleg b{color:var(--tx);font-weight:600;flex:none}
+.dleg em{font-style:normal;color:var(--tx3);font-family:Consolas,monospace;font-size:10.5px}
+.fnote{font-size:10.5px;color:var(--tx3);margin-top:10px;line-height:1.6}
+/* 排行 */
+.rank{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer}
+.rank:last-child{border-bottom:none}
+.rank:active{background:rgba(0,229,255,.06)}
+.rk{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;flex:none;
+  background:rgba(157,180,216,.15);color:var(--tx2)}
+.rk.r1{background:linear-gradient(135deg,#ffd166,#ff9d2e);color:#4a2b00}
+.rk.r2{background:linear-gradient(135deg,#dfe8f5,#9db4d8);color:#20304a}
+.rk.r3{background:linear-gradient(135deg,#e8a06a,#b06a3a);color:#3a1d08}
+.rank .ri{flex:1;min-width:0}
+.rank .ri b{font-size:13.5px}
+.rank .ri p{font-size:10.5px;color:var(--tx3);margin-top:2px;line-height:1.5}
+.rank .rr{text-align:right;flex:none}
+.rank .rr .st{color:var(--or);font-size:11px;letter-spacing:1px;display:block}
+.rank .rr em{font-style:normal;font-size:10px;color:var(--tx3)}
+/* 题型表 */
+.qtab{width:100%;border-collapse:collapse;font-size:11px}
+.qtab th{color:var(--cy);font-weight:600;text-align:left;padding:6px 6px;border-bottom:1px solid var(--line2)}
+.qtab td{padding:7px 6px;border-bottom:1px solid rgba(255,255,255,.06);color:var(--tx2);line-height:1.5}
+.qtab tr:last-child td{border-bottom:none}
+.qtab td:first-child{color:var(--tx);font-weight:600;white-space:nowrap}
+/* 高频实验 */
+.exps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.exp{border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;background:rgba(0,229,255,.04);transition:transform .12s}
+.exp:active{transform:scale(.95);border-color:var(--line2)}
+.exp .ex-ic{font-size:22px;display:block;margin-bottom:6px}
+.exp b{font-size:10.5px;color:var(--tx2);line-height:1.45;font-weight:600}
+/* 物理量单位 */
+.units{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 12px}
+.unit{display:flex;align-items:center;gap:8px;font-size:12px;padding:5px 2px;border-bottom:1px dashed rgba(255,255,255,.07)}
+.unit span{color:var(--tx2);flex:1}
+.unit i{font:italic bold 12px Consolas,monospace;color:var(--cy);width:14px;text-align:center}
+.unit em{font-style:normal;color:var(--tx3);font-size:11px}
+.motto{margin:14px 0 4px;padding:13px 14px;font-size:13px;line-height:1.8;color:var(--or);
+  border:1px solid rgba(255,209,102,.35);background:linear-gradient(90deg,rgba(255,209,102,.1),rgba(255,122,89,.06))}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.qbtn{padding:14px 6px;text-align:center;cursor:pointer;transition:transform .12s}
+.qbtn:active{transform:scale(.94)}
+.qbtn .qi{font-size:24px}
+.qbtn .qt{font-size:12px;color:var(--tx2);margin-top:6px}
+/* ================= 知识树导航 ================= */
+.crumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:4px 2px 14px;font-size:13px}
+.crumb span{color:var(--tx3)}
+.crumb a{color:var(--cy);text-decoration:none;padding:5px 8px;border-radius:8px}
+.crumb a:active{background:rgba(0,229,255,.12)}
+.crumb b{color:var(--tx)}
+.chap{margin-bottom:12px;overflow:hidden}
+.chap-h{display:flex;align-items:center;gap:10px;padding:15px 14px;cursor:pointer}
+.chap-h .ci{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:17px;flex:none;
+  background:rgba(0,229,255,.1);border:1px solid var(--line)}
+.chap-h h4{font-size:15px;flex:1}
+.chap-h .zj{font-size:11px;color:var(--tx3);margin-top:2px}
+.chap-h .cnt{font-size:11px;color:var(--cy);font-family:Consolas,monospace}
+.chap-h .arr{color:var(--tx3);transition:transform .3s}
+.chap.open .arr{transform:rotate(90deg)}
+.chap-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.chap.open .chap-body{max-height:2000px}
+.pt-row{display:flex;align-items:center;gap:10px;padding:13px 14px;border-top:1px solid rgba(0,229,255,.07);cursor:pointer}
+.pt-row:active{background:rgba(0,229,255,.07)}
+.pt-row .nm{flex:1;font-size:14px}
+.pt-row .mst{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--tx3);display:grid;place-items:center;font-size:11px;flex:none;color:transparent}
+.pt-row.mastered .mst{border-color:var(--gn);color:var(--gn);background:rgba(105,240,174,.12)}
+.lv{flex:none;font-size:11px;padding:3px 9px;border-radius:999px;font-weight:600;letter-spacing:1px}
+.lv3{color:#ff8fa0;background:rgba(255,93,115,.14);border:1px solid rgba(255,93,115,.5)}
+.lv2{color:#ffdd8a;background:rgba(255,209,102,.12);border:1px solid rgba(255,209,102,.45)}
+.lv1{color:#9db4d8;background:rgba(157,180,216,.1);border:1px solid rgba(157,180,216,.3)}
+.chap-quizbar{display:flex;align-items:center;gap:10px;padding:12px 14px;border-top:1px dashed var(--line);font-size:13px;color:var(--tx2)}
+.chap-quizbar .btn{margin-left:auto}
+/* ================= 详情弹层 ================= */
+.mask{position:fixed;inset:0;background:rgba(2,6,18,.72);backdrop-filter:blur(3px);z-index:50;display:none}
+.mask.show{display:block;animation:fadeIn .25s ease}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:51;max-height:88vh;overflow-y:auto;
+  border-radius:22px 22px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom));display:none;
+  background:var(--panel2);border:1px solid var(--line2);border-bottom:none;box-shadow:0 -10px 50px rgba(0,0,0,.6)}
+.sheet.show{display:block;animation:slideUp .32s cubic-bezier(.2,.8,.3,1)}
+@keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:none;opacity:1}}
+.sheet .grab{width:44px;height:4px;border-radius:3px;background:rgba(255,255,255,.2);margin:0 auto 14px}
+.sheet h3{font-size:18px;margin:6px 0 10px;padding-right:70px}
+.sheet .meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.sheet .src{font-size:11px;color:var(--tx3)}
+.blk{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px 13px;margin-bottom:10px}
+.blk h5{font-size:12px;color:var(--cy);letter-spacing:2px;margin-bottom:7px;display:flex;gap:6px;align-items:center}
+.blk p{font-size:14px;line-height:1.75;color:var(--tx)}
+.blk.warn{border-color:rgba(255,209,102,.3)}
+.blk.warn h5{color:var(--or)}
+.blk.ev{border-color:rgba(179,136,255,.3)}
+.blk.ev h5{color:var(--pu)}
+.blk.ex{border-color:rgba(0,229,255,.35);background:rgba(0,229,255,.05)}
+.blk.ex h5{color:var(--cy)}
+.tchip{display:inline-block;font-size:12px;color:var(--bl);border:1px solid rgba(77,141,255,.4);border-radius:999px;padding:3px 10px;margin:0 6px 6px 0;background:rgba(77,141,255,.08)}
+.anim-box{border:1px solid var(--line2);border-radius:14px;background:radial-gradient(ellipse at 50% 0%,rgba(0,229,255,.07),transparent 70%),rgba(3,9,24,.8);margin-bottom:12px;overflow:hidden}
+.anim-box svg{display:block;width:100%;height:auto}
+.anim-cap{font-size:11px;color:var(--tx3);text-align:center;padding:6px 0 8px;letter-spacing:2px}
+.sheet-actions{display:flex;gap:10px;margin-top:14px}
+.sheet-actions .btn{flex:1}
+/* ================= 测验 ================= */
+.quiz-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.quiz-head h3{font-size:16px;flex:1}
+.qprog{height:6px;border-radius:4px;background:rgba(255,255,255,.08);margin-bottom:18px;overflow:hidden}
+.qprog b{display:block;height:100%;background:linear-gradient(90deg,var(--cy),var(--bl));transition:width .4s ease}
+.qcard{padding:18px}
+.qcard .qt{font-size:15.5px;line-height:1.7;margin-bottom:16px;font-weight:600}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);
+  margin-bottom:10px;cursor:pointer;font-size:14.5px;line-height:1.6;transition:border-color .15s,background .15s}
+.opt .tag{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--tx3);display:grid;place-items:center;font-size:12px;flex:none;color:var(--tx2);margin-top:1px}
+.opt:active{border-color:var(--cy)}
+.opt.right{border-color:var(--gn);background:rgba(105,240,174,.1)}
+.opt.right .tag{border-color:var(--gn);color:var(--gn)}
+.opt.wrong{border-color:var(--rd);background:rgba(255,93,115,.1)}
+.opt.wrong .tag{border-color:var(--rd);color:var(--rd)}
+.opt.disabled{pointer-events:none;opacity:.75}
+.explain{display:none;padding:12px 13px;border-radius:12px;background:rgba(0,229,255,.06);border:1px solid var(--line);font-size:13.5px;line-height:1.7;margin:6px 0 14px}
+.explain.show{display:block;animation:fadeIn .3s}
+.explain b{color:var(--cy)}
+.quiz-foot{display:flex;gap:10px;margin-top:6px}
+.quiz-foot .btn{flex:1}
+.score-hero{text-align:center;padding:30px 16px}
+.score-hero .big{font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--cy),var(--pu));-webkit-background-clip:text;background-clip:text;color:transparent}
+.score-hero p{color:var(--tx2);margin-top:8px;font-size:14px}
+/* ================= 错题本 ================= */
+.wb-item{padding:14px;margin-bottom:10px}
+.wb-item .q{font-size:14px;line-height:1.65;margin-bottom:10px}
+.wb-item .from{font-size:11px;color:var(--tx3);margin-bottom:8px}
+.wb-item .acts{display:flex;gap:8px}
+.empty{text-align:center;padding:46px 20px;color:var(--tx3)}
+.empty .ei{font-size:44px;margin-bottom:12px;opacity:.8}
+.empty p{font-size:13px;line-height:1.8}
+/* ================= 看板 ================= */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{padding:14px 10px;text-align:center}
+.stat .sv{font-size:22px;font-weight:800;color:var(--cy);font-family:Consolas,monospace}
+.stat .sl{font-size:11px;color:var(--tx3);margin-top:4px;letter-spacing:1px}
+.dash-mod{padding:13px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.dash-mod .ic{font-size:22px;width:34px;text-align:center}
+.dash-mod .info{flex:1}
+.dash-mod .nm{font-size:14px;margin-bottom:6px;display:flex;justify-content:space-between}
+.dash-mod .nm em{font-style:normal;font-size:11px;color:var(--cy);font-family:Consolas,monospace}
+.dash-mod .bar{height:7px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden}
+.dash-mod .bar b{display:block;height:100%;background:linear-gradient(90deg,var(--cy),var(--bl));transition:width .6s ease}
+/* 打卡日历 */
+.cal{padding:14px}
+.cal-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cal-hd b{font-size:14px;letter-spacing:1px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-grid .wd{font-size:10px;color:var(--tx3);text-align:center;padding:4px 0}
+.cal-grid .day{aspect-ratio:1;display:grid;place-items:center;border-radius:9px;font-size:12px;color:var(--tx2);border:1px solid transparent}
+.cal-grid .day.today{border-color:var(--cy);color:var(--cy)}
+.cal-grid .day.hit{background:linear-gradient(135deg,rgba(0,229,255,.85),rgba(77,141,255,.85));color:#03121f;font-weight:700;box-shadow:0 0 12px rgba(0,229,255,.45)}
+.streak-bar{display:flex;align-items:center;gap:12px;padding:14px;margin-bottom:12px}
+.streak-bar .fire{font-size:30px;animation:firePulse 1.6s ease-in-out infinite}
+@keyframes firePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.streak-bar .sn b{font-size:20px;color:var(--or)}
+.streak-bar .sn p{font-size:11px;color:var(--tx3);margin-top:2px}
+.streak-bar .btn{margin-left:auto}
+/* ================= 同步 ================= */
+.sync-row{margin-bottom:14px}
+.sync-row label{display:block;font-size:12px;color:var(--tx2);margin-bottom:6px;letter-spacing:1px}
+.sync-row input{width:100%;padding:13px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(3,9,24,.7);
+  color:var(--tx);font-size:14px;outline:none}
+.sync-row input:focus{border-color:var(--cy)}
+.sync-row .hint{font-size:11px;color:var(--tx3);margin-top:5px;line-height:1.6}
+.sync-status{font-size:12.5px;padding:10px 12px;border-radius:10px;margin-bottom:12px;line-height:1.6}
+.sync-status.ok{background:rgba(105,240,174,.1);color:var(--gn);border:1px solid rgba(105,240,174,.3)}
+.sync-status.err{background:rgba(255,93,115,.1);color:var(--rd);border:1px solid rgba(255,93,115,.3)}
+.sync-status.info{background:rgba(77,141,255,.1);color:var(--bl);border:1px solid rgba(77,141,255,.3)}
+/* ================= 底部导航 ================= */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;justify-content:space-around;
+  background:rgba(6,13,30,.92);backdrop-filter:blur(14px);border-top:1px solid var(--line);
+  padding:8px 4px calc(8px + env(safe-area-inset-bottom))}
+nav button{flex:1;background:none;border:none;color:var(--tx3);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;cursor:pointer}
+nav button .ni{font-size:21px}
+nav button.on{color:var(--cy)}
+nav button.on .ni{filter:drop-shadow(0 0 8px rgba(0,229,255,.7))}
+/* ================= Toast ================= */
+#toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%) translateY(20px);z-index:99;
+  background:rgba(9,20,45,.96);border:1px solid var(--line2);color:var(--tx);padding:12px 20px;border-radius:14px;
+  font-size:14px;opacity:0;pointer-events:none;transition:all .3s ease;max-width:86vw;text-align:center;box-shadow:var(--shadow)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ================= SVG 动画公共 ================= */
+.wire{stroke:#7fd4ff;stroke-width:2;fill:none}
+.wire-flow{stroke:var(--cy);stroke-width:2.5;fill:none;stroke-dasharray:6 8;animation:dashMove 1s linear infinite}
+@keyframes dashMove{to{stroke-dashoffset:-14}}
+.ray{stroke:var(--or);stroke-width:2.5;fill:none;stroke-dasharray:8 6;animation:dashMove 1.2s linear infinite}
+.lbl{font:11px Consolas,monospace;fill:var(--tx2)}
+.lbl2{font:bold 12px "PingFang SC","Microsoft YaHei",sans-serif;fill:var(--cy)}
+.floaty{animation:floatY 2.6s ease-in-out infinite}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.spin{animation:spinK 2.4s linear infinite;transform-origin:center;transform-box:fill-box}
+@keyframes spinK{to{transform:rotate(360deg)}}
+.pulse{animation:pulseK 1.6s ease-in-out infinite}
+@keyframes pulseK{0%,100%{opacity:.35}50%{opacity:1}}
+.bubble{animation:bubbleUp 2.2s linear infinite}
+@keyframes bubbleUp{0%{transform:translateY(0);opacity:.9}100%{transform:translateY(-46px);opacity:0}}
+.heatwave{animation:heatUp 1.8s ease-in infinite}
+@keyframes heatUp{0%{transform:translateY(0);opacity:.8}100%{transform:translateY(-26px);opacity:0}}
+.note{font-size:11px;color:var(--tx3);line-height:1.8;padding:0 4px}
+@media (min-width:640px){ .sheet{max-width:700px;left:50%;transform:translateX(-50%)} .sheet.show{animation:slideUpC .32s cubic-bezier(.2,.8,.3,1)} @keyframes slideUpC{from{transform:translate(-50%,60px);opacity:0}to{transform:translate(-50%,0);opacity:1}} .exps{grid-template-columns:repeat(3,1fr)} .mod-grid{grid-template-columns:repeat(3,1fr)} }
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<div class="grid-overlay"></div>
+
+<div id="app">
+  <header>
+    <div class="logo">🛰️</div>
+    <div>
+      <h1>初中物理知识树</h1>
+      <div class="sub">浙江中考 · 考点导航系统</div>
+    </div>
+    <div class="hdr-right">
+      <span class="chip" id="syncChip" data-go="sync" style="cursor:pointer">☁ 未同步</span>
+    </div>
+  </header>
+
+  <!-- 首页 -->
+  <section class="view active" id="v-home">
+    <div class="card hero">
+      <div class="ring-wrap">
+        <div class="ring">
+          <svg width="86" height="86"><circle cx="43" cy="43" r="37" stroke="rgba(255,255,255,.08)" stroke-width="7" fill="none"/><circle id="heroRing" cx="43" cy="43" r="37" stroke="url(#hg)" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="232.5" stroke-dashoffset="232.5"/><defs><linearGradient id="hg"><stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#4d8dff"/></linearGradient></defs></svg>
+          <div class="val"><span><span id="heroPct">0</span>%<small>总掌握</small></span></div>
+        </div>
+        <div style="flex:1">
+          <h3>指挥官，欢迎登陆</h3>
+          <p>一图掌握初中物理全部知识体系。九大模块逐层展开，必考考点已按浙江近 5 年中考真题标注，开始你的物理攻略吧。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="streak-bar card" style="margin-top:12px">
+      <div class="fire">🔥</div>
+      <div class="sn"><b>连续打卡 <span id="streakNum">0</span> 天</b><p>每天学一点，中考稳一点</p></div>
+      <button class="btn small" id="checkinBtn" data-primary-action>打卡</button>
+    </div>
+
+    <h2 class="sec">一图掌握 · 九大知识模块</h2>
+    <div class="mod-grid" id="modGrid"></div>
+
+    <h2 class="sec">考情面板 · 分值与重点排行</h2>
+    <div id="boardWrap"></div>
+
+    <h2 class="sec">快捷指令</h2>
+    <div class="quick">
+      <div class="card qbtn" data-go="hot"><div class="qi">🔥</div><div class="qt">必考清单</div></div>
+      <div class="card qbtn" data-go="quizhub"><div class="qi">🎯</div><div class="qt">自测中心</div></div>
+      <div class="card qbtn" data-go="wrong"><div class="qi">📕</div><div class="qt">错题本</div></div>
+      <div class="card qbtn" data-go="dash"><div class="qi">📊</div><div class="qt">进度看板</div></div>
+    </div>
+    <div class="card qbtn" data-go="sync" style="margin-top:10px;display:flex;align-items:center;gap:12px;padding:14px 16px">
+      <div class="qi">☁️</div>
+      <div style="text-align:left;flex:1"><div class="qt" style="margin:0;font-size:13px;color:var(--tx)">云同步设置</div><div class="qt">配置 GitHub，iPad 和手机共享学习进度</div></div>
+      <span style="color:var(--tx3)">▸</span>
+    </div>
+    <p class="note" style="margin-top:16px" id="examNote"></p>
+  </section>
+
+  <!-- 知识树（模块→章节→知识点） -->
+  <section class="view" id="v-tree">
+    <div class="crumb" id="crumb"></div>
+    <div id="treeBody"></div>
+  </section>
+
+  <!-- 必考清单 -->
+  <section class="view" id="v-hot">
+    <div class="crumb"><a data-go="home">🏠 主页</a><span>›</span><b>必考考点清单</b></div>
+    <p class="note" style="margin-bottom:12px">以下考点在浙江近 5 年中考中几乎年年出现，优先攻克。点进每个考点可查看讲解、真题举例与易错提醒。</p>
+    <div id="hotBody"></div>
+  </section>
+
+  <!-- 自测中心 -->
+  <section class="view" id="v-quizhub">
+    <div class="crumb"><a data-go="home">🏠 主页</a><span>›</span><b>自测中心</b></div>
+    <p class="note" style="margin-bottom:12px">选择章节开始挑战，答错的题会自动收入错题本。</p>
+    <div id="quizhubBody"></div>
+  </section>
+
+  <!-- 测验 -->
+  <section class="view" id="v-quiz">
+    <div class="quiz-head">
+      <a class="chip" data-go="quizhub" style="cursor:pointer">‹ 返回</a>
+      <h3 id="quizTitle"></h3>
+    </div>
+    <div class="qprog"><b id="quizProg"></b></div>
+    <div id="quizBody"></div>
+  </section>
+
+  <!-- 错题本 -->
+  <section class="view" id="v-wrong">
+    <div class="crumb"><a data-go="home">🏠 主页</a><span>›</span><b>错题本</b></div>
+    <div id="wrongBody"></div>
+  </section>
+
+  <!-- 进度看板 -->
+  <section class="view" id="v-dash">
+    <div class="crumb"><a data-go="home">🏠 主页</a><span>›</span><b>进度看板</b></div>
+    <div class="stat-row" id="dashStats"></div>
+    <h2 class="sec">打卡日历</h2>
+    <div class="card cal">
+      <div class="cal-hd"><b id="calTitle"></b><span class="chip" id="calCount"></span></div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <h2 class="sec">模块掌握度</h2>
+    <div id="dashMods"></div>
+  </section>
+
+  <!-- 同步设置 -->
+  <section class="view" id="v-sync">
+    <div class="crumb"><a data-go="home">🏠 主页</a><span>›</span><b>云同步设置</b></div>
+    <div class="card" style="padding:16px">
+      <div class="sync-status info" id="syncStat">当前为本地模式：数据保存在本设备浏览器中。配置 GitHub 后，手机和 iPad 打开同一页面即可共享学习进度。</div>
+      <div class="sync-row"><label>仓库（格式：用户名/仓库名）</label><input id="inRepo" placeholder="例如 zhangsan/physics-tree-data" autocomplete="off"><div class="hint">建议新建一个专用私有仓库，只存放进度文件。</div></div>
+      <div class="sync-row"><label>Fine-grained Token</label><input id="inToken" placeholder="github_pat_..." autocomplete="off" style="letter-spacing:1px"><div class="hint">GitHub → Settings → Developer settings → Fine-grained tokens 创建；仓库权限只给上面这个仓库，Contents 选 Read and write。Token 只存在本设备浏览器，不写入页面源码。</div></div>
+      <div class="sync-row"><label>进度文件名</label><input id="inFile" value="progress.json" autocomplete="off"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="syncSave" data-primary-action style="flex:1">保存并同步</button>
+        <button class="btn ghost" id="syncPull">拉取云端</button>
+        <button class="btn danger" id="syncClear">清除配置</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 考点详情弹层 -->
+<div class="mask" id="mask"></div>
+<div class="sheet" id="sheet"></div>
+
+<nav>
+  <button data-go="home" class="on"><span class="ni">🛰️</span>主页</button>
+  <button data-go="tree"><span class="ni">🌳</span>知识树</button>
+  <button data-go="quizhub"><span class="ni">🎯</span>自测</button>
+  <button data-go="wrong"><span class="ni">📕</span>错题</button>
+  <button data-go="dash"><span class="ni">📊</span>看板</button>
+</nav>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+ * 初中物理知识树 · 数据文件（v2 · 信息图结构版）
+ * 模块结构参照"一图掌握初中物理全部知识体系"八大模块，
+ * 并补充参考图缺失的「电学」模块（浙江卷分值第一大）。
+ * 考点标注依据：2021-2023 杭州自主命题卷 + 2024-2025 浙江统一命题卷
+ * （杭州、宁波、温州、绍兴同卷），科学满分 160 分，物理约 58 分。
+ * level：3=必考 2=高频 1=偶考
+ * ex：真题举例（对应考试试卷中的真实场景）
+ * ============================================================ */
+
+const TREE = [
+/* ───────────────── 模块 1：机械运动 ───────────────── */
+{
+id:"mm", no:1, name:"机械运动", icon:"📏", color:"#4d8dff", desc:"长度时间测量、运动描述、速度、质量与密度",
+formulas:["v = s / t","s = vt","t = s / v"],
+chapters:[
+{ id:"me1", name:"运动的描述与快慢", zj:"浙教版七上 · 第4章 多种多样的运动",
+pts:[
+{id:"me1-1", n:"参照物与运动相对性", lv:3, sum:"判断运动或静止要先选参照物。同一物体相对不同参照物，运动状态可能不同。不能选研究对象本身作参照物。", types:["选择题"], wrong:["「坐地日行八万里」参照物是太阳/地心；空中加油机与受油机相对静止"], ev:"2022-2024 年在浙江多数地市中考出现，★★★★", ex:"2022 杭州选择真题：小金和小杭并排坐在等待发车的和谐号列车上，边上一列复兴号也在等待。小金说「我们的车开动了」，他选取的参照物是复兴号列车（答案 C）——两车相对位置变了，而站台柱子没动。2023 宁波卷用「孙悟空腾云驾雾」拍摄装置考同一考点：移动背景板也能拍出孙悟空移动的效果。", anim:"frame"},
+{id:"me1-2", n:"速度公式与图像", lv:3, sum:"v=s/t，1 m/s=3.6 km/h。s-t 图像中斜线表示匀速运动（斜率=速度）、水平线表示静止；v-t 图像水平线表示匀速。", types:["选择题","填空题","计算题"], wrong:["s-t 图像的交点是相遇（位置相同），不是速度相同；单位换算 3.6"], ev:"图像信息题是浙江统考力学选择题的稳定考点", ex:"浙江卷常给「甲、乙两同学沿平直路面同向步行的 s-t 图像」，让你判断谁做匀速直线运动、谁的速度大、相遇时距起点多远——读图三问是固定套路。"},
+{id:"me1-3", n:"长度时间测量与平均速度", lv:1, sum:"刻度尺读数要估读到分度值下一位；停表小盘读分、大盘读秒。测平均速度实验：刻度尺测路程、停表测时间，v=s/t。", types:["实验探究题"], wrong:["平均速度必须指明是哪一段路程的；刻度尺读数漏估读位"], ev:"测量平均速度是中考高频实验之一", ex:"高频实验「测量平均速度」：让小车从斜面滑下，分别测出上半段、下半段的路程和时间再算速度——常问下半段平均速度为什么更大。"}
+],
+quiz:[
+{q:"坐在行驶汽车中的乘客，认为自己是静止的，所选的参照物是", o:["路旁的树木","迎面驶来的汽车","汽车座椅","路面"], a:2, e:"乘客相对汽车座椅位置不变，故以座椅为参照物是静止的；相对树木、路面位置在变化。"},
+{q:"在 s-t 图像中，一条水平直线表示物体", o:["匀速运动","加速运动","静止","减速运动"], a:2, e:"水平线表示路程不随时间变化，即物体静止。"},
+{q:"某物体做匀速直线运动，其速度大小", o:["与路程成正比","与时间成反比","由 s/t 计算但与 s、t 无关","随路程增大而增大"], a:2, e:"匀速运动中速度是定值，v=s/t 只是计算式，速度不由某次的 s 或 t 决定。"}
+]},
+{ id:"md1", name:"质量与密度", zj:"浙教版七上 · 第4章 / 七下 · 第1章",
+pts:[
+{id:"md1-1", n:"质量与其测量", lv:1, sum:"质量是物体所含物质的多少，是物体属性，不随形状、状态、空间位置改变。单位 kg。天平使用：水平台、游码归零调平衡，左物右码、镊子夹砝码由大到小。", types:["选择题","实验题"], wrong:["调平衡时动平衡螺母；称量过程中只能加减砝码或移游码，不能再动螺母"], ev:"天平使用规范是实验题基本功", ex:"2022 杭州选择第 1 题考质量估测：下列物体质量最接近 20 kg 的是一辆自行车（一个鸡蛋约 50 g，一本科学书约 200 g）——估测题是浙江卷送分题型。"},
+{id:"md1-2", n:"密度与其测量", lv:2, sum:"密度是物质特性，ρ=m/V。水的密度 1.0×10³ kg/m³。测密度：天平测质量、量筒（或溢水法）测体积；量筒读数视线与凹液面底部相平。", types:["选择题","实验探究题","计算题"], wrong:["密度不随质量、体积改变；1 g/cm³ = 1000 kg/m³ 单位换算"], ev:"密度计算常嵌入浮力、测量实验", ex:"真题场景：用天平测小石块质量、量筒排水法测体积再算密度；若先测体积后测质量（石块带水）会使密度偏大——误差分析是常见追问。"}
+],
+quiz:[
+{q:"一块冰熔化成水后，它的", o:["质量变大","质量变小","质量不变","密度不变"], a:2, e:"质量是物体属性，不随状态改变；冰化水后体积变小、密度变大。"},
+{q:"关于密度公式 ρ=m/V，下列说法正确的是", o:["密度与质量成正比","密度与体积成反比","密度由物质种类决定，与 m、V 无关","质量越大密度越大"], a:2, e:"密度是物质特性，同种物质（同状态）密度相同，ρ=m/V 只是计算式。"}
+]}
+]},
+
+/* ───────────────── 模块 2：声现象 ───────────────── */
+{
+id:"ac", no:2, name:"声现象", icon:"🔊", color:"#69f0ae", desc:"声音的产生、传播、特性与噪声控制",
+formulas:["v = s / t（声速：15℃空气中约 340 m/s）"],
+chapters:[
+{ id:"ac1", name:"声音的产生与传播", zj:"浙教版七下 · 第2章 对环境的觉察",
+pts:[
+{id:"ac1-1", n:"声音由振动产生", lv:2, sum:"一切发声的物体都在振动，振动停止，发声也停止。声源可以是固体、液体、气体。", types:["选择题（现象判断）"], wrong:["振动停止后已发出的声音仍在传播，只是不再发声"], ev:"浙江统考卷常以生活情境（音叉溅水、说话摸喉咙）考查", anim:"sound"},
+{id:"ac1-2", n:"声音的传播需要介质", lv:2, sum:"声音以声波的形式在介质中传播，固体、液体、气体都能传声，真空不能传声。声速一般 v固>v液>v气，15℃空气中约 340 m/s。", types:["选择题","填空题"], wrong:["「传声效果好」与「传声速度快」不是一回事"], ev:"太空通话情境题是浙江卷常见素材", ex:"真题场景：宇航员舱外必须用无线电交谈（真空不能传声）；「土电话」「隔着水管听见敲击」考固体传声更好。"}
+],
+quiz:[
+{q:"把正在发声的音叉接触水面，水面溅起水花，这说明", o:["声音可以在水中传播","声音是由物体振动产生的","水可以发声","声音传播不需要介质"], a:1, e:"音叉发声时在振动，接触水面把振动传给水，溅起水花，证明声音由振动产生。"},
+{q:"宇航员在太空舱外必须用无线电交谈，原因是", o:["太空中噪声太大","真空不能传声","宇航员声音太小","无线电比声音传播快"], a:1, e:"声音传播需要介质，舱外接近真空，声波无法传播，只能靠电磁波通信。"}
+]},
+{ id:"ac2", name:"声音的特性", zj:"浙教版七下 · 第2章 对环境的觉察",
+pts:[
+{id:"ac2-1", n:"音调由频率决定", lv:2, sum:"音调指声音的高低，由发声体振动的频率决定：频率越高，音调越高。弦越短、越细、越紧，音调越高。", types:["选择题（乐器情境）"], wrong:["把「声音大」（响度）说成「声音高」（音调）"], ev:"吹笛按孔、弦乐器调弦等情境在浙江卷反复出现", ex:"真题场景：吹笛子按住不同的孔、吉他换按品格，改变的都是空气柱/弦的长度→频率→音调。"},
+{id:"ac2-2", n:"响度由振幅决定", lv:2, sum:"响度指声音的强弱，与振幅有关：振幅越大，响度越大；还与距声源远近、声音分散程度有关。", types:["选择题"], wrong:["用力敲鼓改变的是响度，不是音调"], ev:"扩音器、调音量情境考查较多"},
+{id:"ac2-3", n:"音色辨声源", lv:2, sum:"音色由发声体的材料、结构决定，是辨别不同发声体的依据（「闻其声知其人」）。", types:["选择题"], wrong:["模仿歌手「像」是音色接近，不是音调相同"], ev:"浙江统考选择题常见送分点"},
+{id:"ac2-4", n:"超声与次声", lv:1, sum:"高于 20000 Hz 为超声波，低于 20 Hz 为次声波，人耳都听不见。超声应用：B超、声呐、清洗；次声监测地震、台风。", types:["选择题"], wrong:["人耳听觉范围 20~20000 Hz 是前提"], ev:"偶考，常与声学应用合并出题"}
+],
+quiz:[
+{q:"吹笛子时用手指按住不同的孔，主要是为了改变声音的", o:["响度","音调","音色","传播速度"], a:1, e:"按住不同孔改变了空气柱的长度，振动频率改变，从而改变音调。"},
+{q:"「闻其声而知其人」，判断依据是声音的", o:["音调","响度","音色","声速"], a:2, e:"不同人声带结构不同，发出声音的音色不同，据此辨人。"}
+]},
+{ id:"ac3", name:"噪声控制与声的利用", zj:"浙教版七下 · 第2章 对环境的觉察",
+pts:[
+{id:"ac3-1", n:"噪声控制三途径", lv:2, sum:"①在声源处减弱（装消声器、禁止鸣笛）；②在传播过程中减弱（隔音墙、关窗、植树）；③在人耳处减弱（戴耳塞、耳罩）。", types:["选择题（措施归类）"], wrong:["「关窗户」是传播过程中减弱，不是人耳处"], ev:"浙江卷环保情境题的高频选项", ex:"真题场景：考场周边「禁止鸣笛」是声源处减弱；高架旁隔音屏、住宅双层玻璃是传播过程中减弱——措施归类几乎年年出现。"},
+{id:"ac3-2", n:"声音传递信息与能量", lv:1, sum:"声能传递信息（B超、声呐、听诊器）也能传递能量（超声清洗、碎石）。", types:["选择题"], wrong:["区分「获得信息」与「施加能量」两类应用"], ev:"偶考，常与超声合并命题"}
+],
+quiz:[
+{q:"下列措施中，属于在声源处减弱噪声的是", o:["道路两旁安装隔音墙","摩托车安装消声器","机场工作人员戴耳罩","住宅楼装双层玻璃"], a:1, e:"消声器直接减少发动机发声，属于声源处控制；隔音墙、双层玻璃是传播过程中，耳罩是人耳处。"},
+{q:"医院用 B 超检查胎儿发育，是利用声音", o:["传递能量","传递信息","在真空中传播","速度比光快"], a:1, e:"B超通过接收反射的超声波获取体内信息，属于声传递信息。"}
+]}
+]},
+
+/* ───────────────── 模块 3：物态变化 ───────────────── */
+{
+id:"st", no:3, name:"物态变化与热学", icon:"🧊", color:"#ff7a59", desc:"温度、六种物态变化、内能与比热容",
+formulas:["Q = cmΔt"],
+chapters:[
+{ id:"ht1", name:"温度与温度计", zj:"浙教版七上 · 第1章 科学入门",
+pts:[
+{id:"ht1-1", n:"温度与温度计", lv:2, sum:"温度表示物体冷热程度；常用温度计利用液体热胀冷缩原理。使用：玻璃泡全部浸入、示数稳定后读数、视线与液面相平；体温计有缩口可离开人体读数，量程 35~42℃。", types:["选择题","实验题读数"], wrong:["体温计使用前要甩；俯视读数偏大、仰视偏小"], ev:"温度计读数与使用规范是实验题基本功"}
+],
+quiz:[
+{q:"用体温计测得某人体温 38.5℃，未甩就直接去测 37℃ 的健康人，示数为", o:["37℃","38.5℃","37.75℃","0℃"], a:1, e:"体温计有缩口，水银柱不会自动退回，示数只能靠甩下降，故仍显示 38.5℃。"}
+]},
+{ id:"ht2", name:"物态变化", zj:"浙教版七上 · 第4章 物质的特性",
+pts:[
+{id:"ht2-1", n:"熔化与凝固", lv:3, sum:"晶体有固定熔点，熔化过程吸热但温度不变（冰、海波）；非晶体没有固定熔点（蜡、玻璃）。凝固是熔化的逆过程，放热。", types:["选择题","实验探究题（图像分析）"], wrong:["晶体熔化曲线水平段：持续吸热、温度不变、固液共存"], ev:"熔化图像题是浙江统考选择题常设题型", anim:"melt", ex:"真题场景：给冰（或海波）加热画温度-时间图像，问水平段物质处于什么状态、是否吸热——图像分析是固定考法。"},
+{id:"ht2-2", n:"汽化与液化", lv:3, sum:"汽化分蒸发（任何温度、表面、缓慢）和沸腾（沸点、表面和内部、剧烈），都吸热。影响蒸发快慢：温度、表面积、空气流速。液化：降低温度、压缩体积；「白气」是液化的小水珠。", types:["选择题","填空题"], wrong:["「白气」不是水蒸气（水蒸气看不见）；冰箱冒白气是空气中水蒸气遇冷液化"], ev:"物态变化判断是浙江卷每年必出的选择题考点", ex:"真题场景：夏天冰棒冒「白气」、冬天呼出「白气」、从冰箱拿出饮料瓶外壁出水珠——判断液化几乎每年必考。"},
+{id:"ht2-3", n:"升华与凝华", lv:2, sum:"升华：固→气吸热（樟脑丸变小、干冰制冷、冰冻衣服变干）；凝华：气→固放热（霜、雾凇、冰花）。", types:["选择题"], wrong:["雾、露是液化；霜、雪是凝华——分清产物状态"], ev:"自然现象成因归类高频出现"},
+{id:"ht2-4", n:"物态变化中的吸放热", lv:2, sum:"熔化、汽化、升华吸热；凝固、液化、凝华放热。应用：干冰人工降雨、下雪不冷化雪冷、出汗降温。", types:["选择题"], wrong:["化雪冷是雪熔化吸热"], ev:"吸放热判断常与现象辨析合并考查"}
+],
+quiz:[
+{q:"晶体在熔化过程中", o:["吸热，温度升高","吸热，温度不变","放热，温度不变","不吸热也不放热"], a:1, e:"晶体熔化时持续吸热但温度保持在熔点不变，处于固液共存状态。"},
+{q:"夏天从冰箱取出的饮料瓶外壁出现小水珠，这是", o:["汽化现象","液化现象","熔化现象","凝华现象"], a:1, e:"空气中水蒸气遇到冷的瓶壁放热液化成小水珠。"},
+{q:"下列现象属于凝华的是", o:["春天冰雪消融","夏天清晨的雾","秋天清晨的霜","冬天冰冻衣服变干"], a:2, e:"霜是水蒸气遇冷直接变成小冰晶，气态直接变固态是凝华。"}
+]},
+{ id:"ht3", name:"分子动理论与内能", zj:"浙教版九上 · 第3章 能量的转化",
+pts:[
+{id:"ht3-1", n:"分子热运动", lv:2, sum:"物质由大量分子构成；分子永不停息地做无规则运动（扩散，温度越高越剧烈）；分子间存在引力和斥力。", types:["选择题"], wrong:["尘土飞扬、雪花飞舞是机械运动，不是分子运动"], ev:"扩散现象辨析是浙江卷选择题常考点"},
+{id:"ht3-2", n:"内能与改变方式", lv:2, sum:"改变内能两种方式：做功（压缩气体做功内能增大、气体膨胀做功内能减小）和热传递，两者等效。任何物体都有内能。", types:["选择题","填空题"], wrong:["吸热不一定升温（如沸腾）；温度升高内能一定增大"], ev:"2024 浙江统考选择题考查压缩气体做功改变内能", anim:"piston", ex:"2024 浙江统考真题情境：汽油机压缩冲程中活塞压缩气体做功，机械能转化为内能，气体温度升高——做功改变内能的标志是「压缩/摩擦/敲打」。"},
+{id:"ht3-3", n:"比热容与热量计算", lv:2, sum:"比热容是物质特性，水的比热容大（4.2×10³ J/(kg·℃)），常用作冷却剂和调节气温。Q=cmΔt。", types:["选择题","计算题"], wrong:["比热容与质量、温度变化无关"], ev:"「水作冷却剂」解释题和 Q=cmΔt 计算反复出现", ex:"真题场景：解释「沿海地区昼夜温差比内陆小」「汽车发动机用水冷却」——标准答案都是水的比热容大。"}
+],
+quiz:[
+{q:"「墙内开花墙外香」说明", o:["分子间有引力","分子在不停地做无规则运动","分子间有斥力","分子很小"], a:1, e:"花香分子扩散到墙外，是分子无规则运动的宏观表现。"},
+{q:"汽车发动机用水作冷却剂，主要因为水的", o:["密度大","比热容大","沸点高","容易获得"], a:1, e:"水的比热容大，相同质量升高相同温度能吸收更多热量，冷却效果好。"}
+]}
+]},
+
+/* ───────────────── 模块 4：光现象 ───────────────── */
+{
+id:"op", no:4, name:"光现象", icon:"🔦", color:"#b388ff", desc:"直线传播、反射、折射、平面镜与透镜成像",
+formulas:["真空中光速 c = 3×10⁸ m/s"],
+chapters:[
+{ id:"op1", name:"光的直线传播", zj:"浙教版七下 · 第2章 对环境的觉察",
+pts:[
+{id:"op1-1", n:"直线传播及现象", lv:2, sum:"光在同种均匀介质中沿直线传播。典型现象：影子、小孔成像（倒立实像）、日食月食、激光准直、排队看齐。", types:["选择题（现象归类）"], wrong:["小孔成像形状由光源决定、与小孔形状无关；水中倒影是反射"], ev:"现象归类是浙江统考选择题常设考点", ex:"真题场景：日食成因、树荫下圆形光斑（小孔成像，斑的形状是太阳的像，与孔形无关）——现象归类选择题常考。"},
+{id:"op1-2", n:"光速", lv:1, sum:"真空中光速 c=3×10⁸ m/s；光年是长度单位。先见闪电后闻雷声说明光速远大于声速。", types:["选择题","填空题"], wrong:["光年不是时间单位"], ev:"多以基础填空形式偶考"}
+],
+quiz:[
+{q:"下列现象中，由光的直线传播形成的是", o:["水中倒影","小孔成像","海市蜃楼","雨后彩虹"], a:1, e:"小孔成像是光沿直线传播形成的倒立实像；倒影是反射，海市蜃楼与彩虹是折射。"},
+{q:"光在真空中的传播速度为", o:["340 m/s","3×10⁵ km/s","3×10⁵ m/s","1500 m/s"], a:1, e:"c=3×10⁸ m/s=3×10⁵ km/s，注意单位换算。"}
+]},
+{ id:"op2", name:"光的反射与平面镜", zj:"浙教版七下 · 第2章 对环境的觉察",
+pts:[
+{id:"op2-1", n:"反射定律", lv:2, sum:"三线共面、两线分居、反射角等于入射角。注意因果：反射角随入射角变化。角度是光线与法线的夹角。", types:["选择题","作图题"], wrong:["说成「入射角等于反射角」因果颠倒"], ev:"作图与角度计算在浙江卷多年出现", anim:"reflect"},
+{id:"op2-2", n:"镜面反射与漫反射", lv:2, sum:"两者都遵循反射定律。镜面反射反射光平行（镜面刺眼）；漫反射反射光射向各方（能从各方向看到物体）。", types:["选择题"], wrong:["漫反射同样遵循反射定律"], ev:"「黑板反光」「电影幕布」情境常考"},
+{id:"op2-3", n:"平面镜成像", lv:3, sum:"特点：正立、等大、虚像；像与物到镜面距离相等、连线与镜面垂直。应用：成像、潜望镜；原理是光的反射。", types:["选择题","实验探究题"], wrong:["像的大小只与物体大小有关，与距离无关；用玻璃板是为了便于确定像的位置"], ev:"「探究平面镜成像特点」是浙江统考高频实验题", anim:"mirror", ex:"高频实验「探究平面镜成像特点」：用玻璃板代替平面镜、拿一支相同蜡烛在板后找像的位置，结论「像物等大、等距、虚像」——实验细节年年考。"}
+],
+quiz:[
+{q:"入射光线与镜面夹角为 30°，则反射角为", o:["30°","60°","90°","0°"], a:1, e:"入射角是入射光线与法线的夹角：90°-30°=60°，反射角等于入射角。"},
+{q:"人站在平面镜前 2 m 处，像到人的距离是；人走近镜面时像的大小", o:["2 m，变大","4 m，不变","4 m，变大","2 m，不变"], a:1, e:"像距等于物距，像到人 4 m；像始终与物等大，与距离无关。"}
+]},
+{ id:"op3", name:"光的折射", zj:"浙教版七下 · 第2章 对环境的觉察",
+pts:[
+{id:"op3-1", n:"折射规律", lv:2, sum:"光从空气斜射入水（玻璃）时折射光线靠近法线，折射角小于入射角；垂直入射方向不变。光路可逆。", types:["选择题","作图题"], wrong:["垂直入射方向不变但速度改变"], ev:"折射作图与判断在统考中稳定出现", anim:"refract"},
+{id:"op3-2", n:"折射现象解释", lv:2, sum:"池水变浅、筷子弯折、叉鱼要瞄准看到的鱼的下方、海市蜃楼，都是折射形成的虚像（像比实际偏高）。", types:["选择题"], wrong:["「看到的鱼」是折射虚像，位置比实际浅"], ev:"2024、2025 浙江卷均以生活情境考查光学成因辨析", ex:"真题场景：渔民叉鱼要瞄准「看到的鱼的下方」；插入水中的筷子「向上弯折」——都是折射虚像偏高的应用。"}
+],
+quiz:[
+{q:"有经验的渔民叉鱼时要瞄准看到的鱼的下方，因为看到的鱼是", o:["光的反射形成的实像","光的折射形成的虚像，比实际位置浅","光的直线传播形成的像","光的折射形成的实像"], a:1, e:"鱼反射的光从水进入空气发生折射，人眼逆着折射光线看去，看到的是位置偏高的虚像。"},
+{q:"下列现象属于光的折射的是", o:["镜中观花","立竿见影","池水看起来变浅","小孔成像"], a:2, e:"池底反射的光从水射向空气时折射，看起来变浅。"}
+]},
+{ id:"op4", name:"透镜及其应用", zj:"浙教版七下 · 第2章 对环境的觉察",
+pts:[
+{id:"op4-1", n:"透镜对光的作用", lv:2, sum:"凸透镜会聚、凹透镜发散。三条特殊光线：过光心方向不变；平行主光轴的光折射后过焦点；过焦点的光折射后平行主光轴。", types:["选择题","作图题"], wrong:["「会聚」是使光线向主光轴偏折，不一定交于一点"], ev:"特殊光线作图是光学必练题型"},
+{id:"op4-2", n:"凸透镜成像规律", lv:3, sum:"u>2f：倒立缩小实像（照相机）；f<u<2f：倒立放大实像（投影仪）；u<f：正立放大虚像（放大镜）。实像区物近像远像变大。", types:["选择题","实验探究题","综合题"], wrong:["实像倒立、虚像正立；蜡烛变短后像向上移动；u=f 是分界点"], ev:"浙江统考年年考：2024 卷考晶状体相当于凸透镜", anim:"lens", ex:"2024 浙江统考选择真题：人眼晶状体相当于凸透镜，视网膜相当于光屏，成倒立缩小的实像——把眼睛和照相机归为一类。实验探究题则常考成像规律与光屏找不到像的原因。"},
+{id:"op4-3", n:"眼睛与视力矫正", lv:2, sum:"近视眼成像在视网膜前，用凹透镜矫正；远视眼成像在视网膜后，用凸透镜矫正。", types:["选择题","填空题"], wrong:["近视戴凹透镜（发散）、远视戴凸透镜（会聚），别记反"], ev:"视力矫正是浙江卷健康情境的常客"}
+],
+quiz:[
+{q:"凸透镜成像实验中，蜡烛位于 2 倍焦距以外，光屏上得到", o:["正立放大的虚像","倒立缩小的实像","倒立放大的实像","正立缩小的实像"], a:1, e:"u>2f 时成倒立、缩小的实像，照相机就是这个原理。"},
+{q:"近视眼看不清远处物体，是因为像成在视网膜的（方），应佩戴（镜）矫正", o:["后；凸透镜","前；凹透镜","前；凸透镜","后；凹透镜"], a:1, e:"近视眼晶状体太厚，像成在视网膜前，凹透镜对光有发散作用，可使像后移。"}
+]}
+]},
+
+/* ───────────────── 模块 5：力与运动 ───────────────── */
+{
+id:"fm", no:5, name:"力与运动", icon:"🧲", color:"#ff5d73", desc:"力的概念、重力摩擦力、牛顿定律、二力平衡",
+formulas:["G = mg","F = ma（定性理解）"],
+chapters:[
+{ id:"me2", name:"力 重力 摩擦力与运动定律", zj:"浙教版八上 · 第2章 力与空间探索",
+pts:[
+{id:"me2-1", n:"力的概念与三要素", lv:2, sum:"力是物体对物体的作用，物体间力的作用是相互的。三要素：大小、方向、作用点；用力的示意图表示。", types:["选择题","作图题"], wrong:["不接触的物体间也可能有力（磁力、重力）；施力物体同时也是受力物体"], ev:"2022-2024 年力的三要素在浙江 7-8 个地市考查，★★★★★", ex:"真题场景：划船时桨向后划水船却前进、火箭向下喷气却升空——都用「力的作用是相互的」解释，是浙江卷高频简答题。"},
+{id:"me2-2", n:"弹力与弹簧测力计", lv:2, sum:"弹簧测力计原理：弹性限度内，弹簧伸长量与拉力成正比。使用前调零、拉力沿轴线、看清量程分度值。", types:["选择题","实验题"], wrong:["倒置使用要考虑外壳重力"], ev:"实验仪器使用规范常考"},
+{id:"me2-3", n:"重力", lv:2, sum:"G=mg，g≈10 N/kg。方向竖直向下，作用点叫重心。", types:["选择题","计算题"], wrong:["「竖直向下」不是「垂直向下」；质量不随位置变，重力随位置略变"], ev:"G=mg 计算在填空与综合题中高频"},
+{id:"me2-4", n:"摩擦力及其影响因素", lv:3, sum:"滑动摩擦力大小与压力、接触面粗糙程度有关，与接触面积、速度无关。增大有益摩擦与减小有害摩擦的方法。", types:["选择题","实验探究题"], wrong:["实验必须匀速拉动使拉力等于摩擦力（二力平衡）"], ev:"探究影响摩擦力因素的实验是浙江统考高频实验题", anim:"friction", ex:"高频实验「探究影响滑动摩擦力大小的因素」：水平匀速拉动木块（利用二力平衡读摩擦力）、控制变量比较压力与粗糙程度——结论表述是得分关键。"},
+{id:"me2-5", n:"牛顿第一定律", lv:3, sum:"一切物体不受外力时，总保持匀速直线运动或静止状态。实验加推理得出，不能直接验证。力是改变运动状态的原因，不是维持运动的原因。", types:["选择题","实验推理题"], wrong:["「受到惯性」是错误说法，惯性是性质不是力"], ev:"斜面小车实验+推理是浙江卷经典实验情境", anim:"pendulum", ex:"高频实验「探究阻力对物体运动的影响」：同一小车从同一斜面同一高度滑下，在毛巾/棉布/木板表面滑行距离不同，推理出「若无阻力将一直匀速运动」——科学推理法是考查重点。"},
+{id:"me2-6", n:"惯性", lv:2, sum:"一切物体都有保持原来运动状态不变的性质。惯性只与质量有关，质量越大惯性越大。", types:["选择题（现象解释）"], wrong:["惯性与速度无关；系安全带是防惯性带来的伤害"], ev:"惯性现象解释题年年出现", ex:"真题场景：公交车急刹车人向前倾、拍打衣服除尘、跳远助跑——惯性解释简答题几乎每年出现，答题模板「原来…，某部分因惯性保持…」。"},
+{id:"me2-7", n:"二力平衡", lv:3, sum:"平衡条件：同体、等大、反向、共线。受平衡力时保持静止或匀速直线运动。", types:["选择题","计算题"], wrong:["平衡力作用在同一物体上；相互作用力作用在两个物体上"], ev:"浙江统考力学选择题必考辨析点", anim:"balance", ex:"真题场景：吊在天花板上的灯、匀速上升的电梯里的人——判断「哪两个力是平衡力」，干扰项总是「压力与支持力」这对相互作用力。"}
+],
+quiz:[
+{q:"下列做法中，为了减小摩擦的是", o:["轮胎表面刻花纹","鞋底做成凹凸不平","给自行车链条加润滑油","体操运动员上器械前涂镁粉"], a:2, e:"加润滑油使接触面更光滑，减小摩擦；其余三项都是增大粗糙程度来增大摩擦。"},
+{q:"正在做匀速圆周运动的物体，若所受外力全部消失，它将", o:["继续做圆周运动","立即静止","做匀速直线运动","速度越来越慢"], a:2, e:"由牛顿第一定律，不受力时物体保持该瞬间的速度做匀速直线运动。"},
+{q:"书本静止放在水平桌面上，下列两个力是一对平衡力的是", o:["书的重力与书对桌面的压力","书的重力与桌面对书的支持力","书对桌面的压力与桌面对书的支持力","桌的重力与地面对桌的支持力"], a:1, e:"书的重力与支持力作用在同一物体（书）上、等大反向共线；压力与支持力是相互作用力。"}
+]}
+]},
+
+/* ───────────────── 模块 6：压强与浮力 ───────────────── */
+{
+id:"pb", no:6, name:"压强与浮力", icon:"🌊", color:"#00e5ff", desc:"固体/液体/大气压强、流体压强、浮力与浮沉",
+formulas:["p = F / S","p = ρgh","F浮 = ρ液 g V排"],
+chapters:[
+{ id:"me3", name:"压强", zj:"浙教版八上 · 第2章 / 第3章",
+pts:[
+{id:"me3-1", n:"固体压强", lv:3, sum:"p=F/S，单位帕斯卡（Pa）。增大压强：增大压力或减小受力面积；减小压强反之。", types:["选择题","计算题"], wrong:["受力面积是实际接触面积；切割叠加问题先分析 F 和 S 各自变化"], ev:"浙江统考物理压轴常客", anim:"pressure", ex:"真题场景：书包带宽、坦克履带、图钉尖——「增大/减小压强」归类选择题年年有；压轴计算常考柱体切割、叠加后对地面压强的变化。"},
+{id:"me3-2", n:"液体压强", lv:3, sum:"p=ρgh，只与液体密度和深度有关，与容器形状无关。同深度各方向压强相等。", types:["选择题","实验探究题","计算题"], wrong:["深度 h 是到液面的竖直距离；U 形管压强计用高度差反映压强"], ev:"2024 浙江统考以液体压强实验探究为重点题", anim:"liquid", ex:"2024 浙江统考实验探究真题：用 U 形管压强计探究液体内部压强，比较同深度不同方向、不同深度的高度差——控制变量与结论表述是得分点。"},
+{id:"me3-3", n:"大气压强", lv:2, sum:"托里拆利实验测出标准大气压≈760 mm 水银柱≈1.01×10⁵ Pa。大气压随高度升高而减小。应用：吸盘、吸管、抽水机。", types:["选择题","填空题"], wrong:["管倾斜时水银柱长度变长但竖直高度不变"], ev:"统考选择题高频考点", ex:"真题场景：吸管吸饮料、吸盘挂钩、高原上煮不熟饭（气压低沸点低）——大气压存在与应用的判断题高频。"},
+{id:"me3-4", n:"流体压强与流速", lv:2, sum:"流速越大的位置压强越小。应用：机翼升力、高铁安全线、喷雾器。", types:["选择题"], wrong:["机翼上方流速大压强小，产生向上的压力差"], ev:"生活情境选择题常见", ex:"真题场景：高铁站台安全线、两张纸中间吹气纸会靠拢——流体压强选择题常用这些情境。"}
+],
+quiz:[
+{q:"书包带做得较宽，是为了", o:["增大压力","减小压力","增大压强","减小压强"], a:3, e:"压力不变，增大受力面积可减小压强。"},
+{q:"用托里拆利实验测大气压，下列操作会使测量值偏小的是", o:["玻璃管变粗","玻璃管倾斜","管内混入少量空气","玻璃管上提但未离开水银面"], a:2, e:"混入空气后空气压强抵消部分水银柱压强，水银柱高度下降，测量值偏小。"},
+{q:"高铁站台上设置安全线，是因为列车高速通过时", o:["列车对人的吸引力","人与车之间空气流速大压强小","车带动的气流把人推开","地面摩擦力减小"], a:1, e:"车体附近空气流速大、压强小，人外侧气压相对较大，产生指向列车的压力差。"}
+]},
+{ id:"me4", name:"浮力", zj:"浙教版八上 · 第1章 水和水的溶液",
+pts:[
+{id:"me4-1", n:"浮力与称重法", lv:2, sum:"浸在液体中的物体受到向上的浮力，F浮=G-F拉（称重法）。下沉的物体也受浮力。", types:["选择题","实验题"], wrong:["下沉的物体同样受浮力"], ev:"浮力概念辨析是统考基础题"},
+{id:"me4-2", n:"阿基米德原理", lv:3, sum:"F浮=ρ液gV排。浮力只与液体密度和排开体积有关，与浸没后深度、物体密度形状无关。", types:["选择题","实验探究题","计算题"], wrong:["V排 不一定等于 V物；浸没后继续下潜浮力不变"], ev:"浙江统考物理核心考点，实验与计算年年涉及", anim:"archimedes", ex:"高频实验「探究浮力大小的影响因素」：称重法测浮力、溢水杯验证 F浮=G排——2024、2025 统考都涉及浮力实验或计算。"},
+{id:"me4-3", n:"物体浮沉条件", lv:3, sum:"浸没时：F浮>G 上浮；F浮=G 悬浮；F浮<G 下沉。漂浮时 F浮=G 且 V排<V物。", types:["选择题","计算题","综合题"], wrong:["悬浮与漂浮都满足 F浮=G，但 V排 不同"], ev:"2025 浙江统考压轴题情境", anim:"fish", ex:"2025 浙江统考压轴真题：鱼通过鱼鳔调节自身浮沉——鳔胀大时鱼的体积增大、V排增大、浮力增大而上浮。同一卷还常把浮沉条件与密度结合出计算。"},
+{id:"me4-4", n:"浮沉条件的应用", lv:2, sum:"轮船（空心增大 V排）、潜水艇（改变自身重力）、密度计（漂浮，刻度上大下小）。", types:["选择题"], wrong:["潜水艇下潜是吸水增重，浸没后浮力不变"], ev:"应用类情境选择题高频出现"}
+],
+quiz:[
+{q:"一物体浸没在水中后继续下潜，它受到的浮力", o:["越来越大","越来越小","保持不变","先变大后变小"], a:2, e:"浸没后 V排 不再变化，由 F浮=ρ液gV排 知浮力不变。"},
+{q:"鱼鳔内气体增多时，鱼会上浮。原因是", o:["鱼的重力减小","鱼的体积增大，排开水体积增大，浮力增大","水的密度变大","鱼受到水的压强减小"], a:1, e:"鱼鳔胀大使 V排 增大，浮力大于重力而上浮——2025 浙江统考压轴情境。"},
+{q:"将一物体放入装满水的溢水杯中，溢出 2 N 的水，物体静止时漂浮，则物体重力", o:["大于 2 N","小于 2 N","等于 2 N","无法判断"], a:2, e:"漂浮时 F浮=G；由阿基米德原理 F浮=G排=2 N。"}
+]}
+]},
+
+/* ───────────────── 模块 7：功和机械能 ───────────────── */
+{
+id:"we", no:7, name:"功和机械能", icon:"⚙️", color:"#ffd166", desc:"功、功率、动能势能与机械能转化",
+formulas:["W = Fs","P = W / t","P = Fv"],
+chapters:[
+{ id:"me5", name:"功 功率 机械能", zj:"浙教版九上 · 第3章 能量的转化",
+pts:[
+{id:"me5-1", n:"功", lv:3, sum:"做功两必要因素：力、沿力方向移动的距离。W=Fs。三种不做功：有力无距离、有距离无力、力与运动垂直。", types:["选择题","计算题"], wrong:["提水桶水平行走，提力不做功"], ev:"W=Fs 计算是浙江统考填空题常客", ex:"真题场景：「搬而未动」「踢出去后滚动的足球」「提包水平走」判断是否做功——三类不做功是固定陷阱。"},
+{id:"me5-2", n:"功率", lv:2, sum:"功率表示做功快慢，P=W/t；匀速时 P=Fv。功率大不等于做功多。", types:["选择题","计算题"], wrong:["功率大=做功快，不一定做功多"], ev:"比较做功快慢的情境题高频", ex:"真题场景：登楼比赛比较功率（估测体重和楼层高度）、起重机吊货——P=W/t 的估测与计算常考。"},
+{id:"me5-3", n:"机械能及其转化", lv:3, sum:"动能与质量、速度有关；重力势能与质量、高度有关。动能势能可相互转化；只有两者互转时机械能守恒。", types:["选择题","实验探究题"], wrong:["匀速上升：动能不变、势能增大、机械能增大（有外力做功）"], ev:"能量转化判断题是浙江卷选择题必考类型", ex:"真题场景：滚摆、单摆、过山车、射箭——判断动能势能的转化；「匀速洒水的洒水车」动能减小是经典陷阱。"},
+{id:"me5-4", n:"机械效率", lv:2, sum:"η=W有用/W总，任何机械效率都小于 1。提高途径：减轻自重、减小摩擦、增加物重。", types:["选择题","计算题（与滑轮结合）"], wrong:["机械效率与省力多少无关"], ev:"与滑轮组结合的计算是压轴题常见组成"}
+],
+quiz:[
+{q:"用 100 N 的水平推力推物体在水平地面上前进了 5 m，推力做的功是", o:["20 J","500 J","100 J","5 J"], a:1, e:"W=Fs=100 N×5 m=500 J。"},
+{q:"起重机匀速吊起货物的过程中，货物的", o:["动能增大，势能增大","动能不变，势能增大，机械能增大","动能不变，机械能不变","动能减小，势能增大"], a:1, e:"匀速则动能不变；高度升高势能增大；机械能增大（拉力做了功）。"},
+{q:"关于功率，下列说法正确的是", o:["做功越多功率越大","功率越大做功越快","做功时间越短功率越大","功率大的机械效率一定高"], a:1, e:"功率描述做功快慢，与机械效率无关。"}
+]}
+]},
+
+/* ───────────────── 模块 8：简单机械与能 ───────────────── */
+{
+id:"sm", no:8, name:"简单机械与能", icon:"🏗️", color:"#7fd4ff", desc:"杠杆、滑轮、机械效率、能源与信息",
+formulas:["F₁l₁ = F₂l₂","η = W有用 / W总 × 100%"],
+chapters:[
+{ id:"me6", name:"简单机械", zj:"浙教版九下 · 第3章 简单机械",
+pts:[
+{id:"me6-1", n:"杠杆五要素与平衡条件", lv:3, sum:"五要素：支点、动力、阻力、动力臂、阻力臂（力臂是支点到力作用线的垂直距离）。平衡条件 F₁L₁=F₂L₂。实验调水平平衡便于读力臂。", types:["选择题","实验探究题","计算题"], wrong:["力臂不是支点到作用点的距离"], ev:"2024、2025 浙江统考压轴题均考杠杆", anim:"lever", ex:"2025 浙江统考压轴真题：「古人搬巨石」用杠杆和滚木；2024 卷「高空修枝工具」也是杠杆+滑轮组——杠杆力臂作图与计算是压轴标配。"},
+{id:"me6-2", n:"杠杆的分类", lv:2, sum:"省力杠杆 L₁>L₂（撬棒、钢丝钳）；费力杠杆 L₁<L₂（镊子、钓鱼竿、筷子）；等臂杠杆（天平）。省力必费距离。", types:["选择题"], wrong:["判断类别先找支点再比力臂"], ev:"生活工具归类题高频", ex:"真题场景：给一组工具（筷子、钳子、镊子、起子）归类省力/费力杠杆——归类选择题高频。"},
+{id:"me6-3", n:"滑轮与滑轮组", lv:3, sum:"定滑轮不省力改方向；动滑轮省一半力；滑轮组 F=(G物+G动)/n，s=nh，n 为承担动滑轮的绳子段数。", types:["选择题","计算题"], wrong:["数 n 只看与动滑轮相连的绳子段数"], ev:"滑轮组+机械效率是计算压轴常客", anim:"pulley", ex:"2024 浙江统考「高空修枝工具」真题：工具由杠杆和滑轮组构成，分析省力情况——滑轮组绕线、n 的判定与 F 的计算是压轴常见问法。"},
+{id:"me6-4", n:"斜面", lv:1, sum:"斜面省力但费距离，不省功。盘山公路是应用。", types:["选择题"], wrong:["省力不省功"], ev:"偶考，多作为情境选项出现"}
+],
+quiz:[
+{q:"用撬棒撬石头时，为了更省力，应该", o:["手尽量靠近支点","手尽量远离支点","把支点靠近手","换用更短的撬棒"], a:1, e:"手远离支点增大动力臂，阻力与阻力臂不变时越省力。"},
+{q:"使用定滑轮的好处是", o:["能省力","能改变力的方向","既能省力又能改变方向","能提高机械效率"], a:1, e:"定滑轮实质是等臂杠杆，不省力但能改变用力方向。"}
+]},
+{ id:"en1", name:"能量与能源", zj:"浙教版九下 · 能量的转化与守恒",
+pts:[
+{id:"en1-1", n:"能量守恒与转化", lv:2, sum:"能量不会凭空产生或消灭，只会转化或转移，总量不变。转化和转移具有方向性。", types:["选择题"], wrong:["永动机不可能；某物体能量可变，总量不变"], ev:"能量守恒判断是浙江卷选择题稳定考点"},
+{id:"en1-2", n:"可再生与不可再生能源", lv:2, sum:"可再生：太阳能、风能、水能、生物质能、潮汐能；不可再生：煤、石油、天然气、核燃料。", types:["选择题"], wrong:["核能是不可再生能源"], ev:"能源分类是送分型选择题", ex:"真题场景：给一组能源（煤、石油、天然气、风能、太阳能）分类，或结合「碳达峰碳中和」考清洁能源——送分选择题。"},
+{id:"en1-3", n:"核能与太阳能", lv:2, sum:"裂变（核电站、可控制链式反应）和聚变（太阳内部、氢弹）。太阳能电池把太阳能直接转化为电能。", types:["选择题"], wrong:["核电站是裂变不是聚变"], ev:"核电与太阳能情境题高频"}
+],
+quiz:[
+{q:"下列能源中，属于可再生能源的是", o:["煤","石油","天然气","风能"], a:3, e:"风能可以源源不断获得；煤、石油、天然气都是化石能源。"},
+{q:"核电站利用核能发电，其核心设备中发生的核反应是", o:["核聚变","核裂变","化学反应","电磁感应"], a:1, e:"核电站通过可控制的核裂变链式反应释放能量。"}
+]},
+{ id:"en2", name:"信息的传递", zj:"浙教版九下 · 信息的传递",
+pts:[
+{id:"en2-1", n:"电磁波与通信", lv:1, sum:"电磁波可在真空中传播，c=3×10⁸ m/s，c=λf。手机、广播、卫星通信都用电磁波；光纤通信用激光全反射。", types:["选择题"], wrong:["声波不能在真空中传播而电磁波可以"], ev:"偶考，常与声学对比命题"}
+],
+quiz:[
+{q:"手机之间传递信息依靠的是", o:["超声波","次声波","电磁波","光导纤维"], a:2, e:"手机利用电磁波传递信号。"}
+]}
+]},
+
+/* ───────────────── 模块 9：电学（参考图缺失·补充） ───────────────── */
+{
+id:"el", no:9, name:"电学", icon:"⚡", color:"#ffe066", desc:"电路、欧姆定律、电功率、家庭电路与电磁现象（分值第一大）",
+formulas:["I = U / R","W = UIt","P = UI","Q = I²Rt"],
+chapters:[
+{ id:"el1", name:"电路基础", zj:"浙教版八上 · 第4章 电路探秘",
+pts:[
+{id:"el1-1", n:"电荷与电流", lv:1, sum:"摩擦起电实质是电子转移。正电荷定向移动方向为电流方向，与电子移动方向相反。电源外部电流从正极流向负极。", types:["选择题"], wrong:["电流方向与电子移动方向相反"], ev:"概念辨析偶考"},
+{id:"el1-2", n:"串并联电路识别", lv:3, sum:"串联一条路径互相影响；并联多条支路互不影响。家用电器之间都是并联。识别：电流流向法、去表法。", types:["选择题","电路设计题"], wrong:["干路开关控制全部，支路开关只控本支路"], ev:"电路识别与连接年年考", anim:"circuit", ex:"2022 杭州选择真题：甲、乙两个独立房间，闭合甲房间开关只有乙房间电铃响，闭合乙房间开关只有甲房间电铃响——选出符合要求的电路图，考的就是串并联与开关位置设计。"},
+{id:"el1-3", n:"电流表与电压表", lv:2, sum:"电流表串联、内阻很小；电压表并联、内阻很大。量程选择与试触。", types:["选择题","实验题"], wrong:["电压表串联进电路时灯不亮、示数接近电源电压"], ev:"电表使用规范是实验题基本功"},
+{id:"el1-4", n:"影响电阻的因素与变阻器", lv:2, sum:"电阻与材料、长度、横截面积、温度有关，与电压电流无关。滑动变阻器「一上一下」接法。", types:["选择题","实验题"], wrong:["接两上等于导线、接两下等于定值电阻；闭合开关前滑片置最大阻值处"], ev:"变阻器接线与作用是实验探究题高频"}
+],
+quiz:[
+{q:"家庭电路中，各用电器之间的连接方式是", o:["串联","并联","有的串联有的并联","无法确定"], a:1, e:"并联时各用电器互不影响，电压都是 220 V。"},
+{q:"使用滑动变阻器时，正确的接法是", o:["两个上接线柱","两个下接线柱","一上一下各一个","任意两个接线柱"], a:2, e:"「一上一下」才能通过移动滑片改变接入电阻丝长度。"}
+]},
+{ id:"el2", name:"欧姆定律", zj:"浙教版八上 · 第4章 电路探秘",
+pts:[
+{id:"el2-1", n:"欧姆定律", lv:3, sum:"I=U/R：电流与电压成正比、与电阻成反比。三个量对应同一段电路、同一时刻。", types:["选择题","计算题"], wrong:["电阻是导体本身性质，不由 U/I 决定"], ev:"浙江统考电学核心，计算题必用"},
+{id:"el2-2", n:"动态电路分析", lv:3, sum:"滑片移动或开关通断引起电表示数变化。步骤：判断结构→总电阻→总电流→各部分电压（串联分压、并联电压不变）。", types:["选择题（压轴）","计算题"], wrong:["串联中电阻变大者分压变大；并联各支路电压等于电源电压"], ev:"动态电路是统考电学选择题压轴常客", anim:"dynamic", ex:"真题场景：「滑片向右移动，两表示数如何变化」——动态电路选择题是浙江卷电学压轴标配，按四步分析法可稳拿分。"},
+{id:"el2-3", n:"电路故障分析", lv:3, sum:"电流表无示数→断路；有示数但用电器不工作→该电器短路。电压表并联段断路时示数接近电源电压。", types:["选择题"], wrong:["电压表串联（用电器断路）时灯不亮、电压表示数接近电源电压"], ev:"故障判断题是电学选择题必考类型", ex:"真题场景：「闭合开关灯不亮，电流表无示数，电压表示数接近电源电压」——故障在电压表并联的灯泡处断路，是年年出现的高频陷阱。"},
+{id:"el2-4", n:"伏安法测电阻", lv:3, sum:"原理 R=U/I。变阻器作用：保护电路+改变电压电流多次测量。测小灯泡电阻不能取平均（电阻随温度变）。", types:["实验探究题"], wrong:["变阻器的两个作用都要答"], ev:"伏安法测电阻/电功率二选一，电学实验固定考点", anim:"voltampere", ex:"高频实验「伏安法测电阻」：画电路图、连实物、读电表、算电阻、说变阻器作用——实验探究题固定考点，2022 杭州卷也考过电路设计。"}
+],
+quiz:[
+{q:"导体两端电压为 6 V，电阻为 10 Ω，通过它的电流为", o:["0.6 A","60 A","1.67 A","0.167 A"], a:0, e:"I=U/R=6 V÷10 Ω=0.6 A。"},
+{q:"闭合开关后，小灯泡不亮，电流表无示数，电压表（并联在灯泡两端）示数接近电源电压，故障可能是", o:["灯泡短路","灯泡断路","变阻器短路","电流表短路"], a:1, e:"电流表无示数说明断路；电压表测得接近电源电压，故是灯泡处断路。"}
+]},
+{ id:"el3", name:"电功 电功率 电热", zj:"浙教版九上 · 第3章 / 八上 · 第4章",
+pts:[
+{id:"el3-1", n:"电功与电功率", lv:3, sum:"W=UIt=Pt，1 度=1 kW·h=3.6×10⁶ J。P=UI 表示做功快慢。灯泡亮度由实际功率决定。", types:["选择题","计算题"], wrong:["kW·h 是电能单位不是功率单位"], ev:"浙江统考电学计算的必用公式", anim:"power", ex:"真题场景：「220V 100W」灯泡接在 110V 电路中的实际功率、电能表转盘转数算电费——电功率计算是电学大题核心。"},
+{id:"el3-2", n:"焦耳定律", lv:3, sum:"Q=I²Rt。串联电阻越大产热越多，并联电阻越小产热越多。", types:["选择题","计算题"], wrong:["电热丝热得发红而导线不热：串联电流相同，电阻大产热多"], ev:"电热器多档位问题是计算题高频情境", anim:"joule", ex:"高频实验「测量小灯泡电功率」与电热器多档位计算（高温档/低温档开关切换）是浙江卷计算题高频情境。"},
+{id:"el3-3", n:"家庭电路与安全用电", lv:2, sum:"220 V；开关接火线；三孔插座接地防外壳漏电；安全电压不高于 36 V。", types:["选择题"], wrong:["开关必须接火线；金属外壳用电器必须接地"], ev:"安全用电常识题稳定出现"}
+],
+quiz:[
+{q:"电炉丝热得发红而与之相连的导线却不怎么热，主要原因是", o:["导线散热更快","通过电炉丝的电流更大","电炉丝的电阻远大于导线","导线不是金属做的"], a:2, e:"串联电流相同，由 Q=I²Rt，电阻大的电炉丝产热多。"},
+{q:"家用电冰箱使用三脚插头，其中接地的插脚是为了", o:["更美观","防止冰箱外壳漏电时触电","增大电流","节约电能"], a:1, e:"接地插脚把金属外壳与大地相连，漏电时电流经地线流入大地。"}
+]},
+{ id:"el4", name:"电磁现象", zj:"浙教版八下 · 第1章 电与磁",
+pts:[
+{id:"el4-1", n:"磁场与磁感线", lv:2, sum:"磁感线外部从 N 到 S，越密磁场越强。地磁南极在地理北极附近。", types:["选择题","作图题"], wrong:["磁感线不是真实存在的"], ev:"磁场概念与磁感线作图是基础考点", anim:"magnet"},
+{id:"el4-2", n:"电流的磁效应与电磁铁", lv:2, sum:"奥斯特实验证明通电导线周围存在磁场。电磁铁磁性与电流大小、线圈匝数有关。", types:["选择题","实验探究题"], wrong:["探究匝数影响时要控制电流相同"], ev:"电磁铁探究实验是浙江卷高频实验题", anim:"emagnet"},
+{id:"el4-3", n:"磁场对电流的作用（电动机）", lv:2, sum:"通电导体在磁场中受力运动。电动机：电能→机械能。", types:["选择题（原理辨析）"], wrong:["电动机（有电源）与发电机（无电源）原理图区分是经典陷阱"], ev:"电动机/发电机原理辨析年年考", anim:"motor", ex:"真题场景：给四幅实验装置图，选出「电动机原理」或「发电机原理」——看有没有电源即可判断，年年考的送分辨析。"},
+{id:"el4-4", n:"电磁感应（发电机）", lv:2, sum:"闭合电路一部分导体切割磁感线产生感应电流。发电机：机械能→电能。", types:["选择题","实验题"], wrong:["必须闭合电路且切割才有电流"], ev:"电磁感应实验判断是统考选择题高频"}
+],
+quiz:[
+{q:"第一个发现电流周围存在磁场的科学家是", o:["法拉第","奥斯特","牛顿","欧姆"], a:1, e:"奥斯特实验揭示了电与磁的联系。"},
+{q:"发电机的工作原理是", o:["通电导体在磁场中受力","电磁感应","电流的磁效应","摩擦起电"], a:1, e:"发电机利用电磁感应把机械能转化为电能。"}
+]}
+]}
+];
+
+/* 考频等级元信息 */
+const LEVEL_META = {
+  3: { label:"必考", cls:"lv3", icon:"🔥", tip:"年年必考 · 重点投入" },
+  2: { label:"高频", cls:"lv2", icon:"⚡", tip:"多数年份考查 · 熟练掌握" },
+  1: { label:"偶考", cls:"lv1", icon:"✦", tip:"偶尔出现 · 了解即可" }
+};
+
+/* 重点知识排行（按重要性，参照考纲分析图） */
+const RANKS = [
+  { r:1, name:"电路与电学综合", sub:"电路分析、欧姆定律、动态电路、电功率、家庭电路等", stars:5, freq:"几乎每年必考", mod:"el" },
+  { r:2, name:"浮力与压强综合", sub:"浮力计算、压强应用、液体压强、密度与浮沉条件等", stars:5, freq:"几乎每年必考", mod:"pb" },
+  { r:3, name:"力与运动综合", sub:"力的分析、牛顿定律、二力平衡、摩擦力、惯性等", stars:4, freq:"每年必考", mod:"fm" },
+  { r:4, name:"功、功率与机械效率", sub:"功与能、机械效率、简单机械、功率计算等", stars:4, freq:"高频考点", mod:"we" },
+  { r:5, name:"光学综合", sub:"光的反射、折射、透镜成像、光学作图等", stars:4, freq:"高频考点", mod:"op" },
+  { r:6, name:"物态变化与热学", sub:"熔化凝固、汽化液化、比热容、内能等", stars:3, freq:"中频考点", mod:"st" },
+  { r:7, name:"声学", sub:"声音的产生与传播、特性、噪声控制等", stars:2, freq:"中频考点", mod:"ac" },
+  { r:8, name:"简单机械", sub:"杠杆、滑轮、机械效率等", stars:3, freq:"中频考点", mod:"sm" },
+  { r:9, name:"质量与密度", sub:"密度计算、测量、鉴别物质等", stars:3, freq:"中低频考点", mod:"mm" },
+  { r:10, name:"信息与能源", sub:"能源分类、能量转化、信息传播等", stars:2, freq:"低频考点", mod:"sm" }
+];
+
+/* 模块分值占比（参照图：以物理部分约 80 分计的全国平均参考，浙江卷力学电学占比更高） */
+const DONUT = [
+  { name:"电学", range:"35%~40%", pts:"28~32分", p:35, color:"#ff5d73" },
+  { name:"力学(压强浮力功机械)", range:"30%~35%", pts:"24~28分", p:30, color:"#ffd166" },
+  { name:"热学", range:"10%~15%", pts:"8~12分", p:12, color:"#69f0ae" },
+  { name:"声学", range:"7%~10%", pts:"6~8分", p:8, color:"#b388ff" },
+  { name:"物态变化", range:"5%~7%", pts:"4~6分", p:6, color:"#7fd4ff" },
+  { name:"光现象", range:"3%~5%", pts:"2~4分", p:4, color:"#4d8dff" },
+  { name:"简单机械与功", range:"3%~5%", pts:"2~4分", p:3, color:"#ff7a59" },
+  { name:"信息与能源", range:"2%~3%", pts:"1~2分", p:2, color:"#9db4d8" }
+];
+
+/* 题型分值分布（参考） */
+const QTYPES = [
+  ["选择题","16~20","20%~25%","基础概念、规律应用"],
+  ["填空题","10~14","12%~17%","基础知识、实验原理"],
+  ["作图题","4~6","5%~7%","光学作图、力学作图、电路图等"],
+  ["实验探究题","18~24","22%~30%","实验原理、操作、数据分析"],
+  ["计算与综合题","20~26","25%~30%","综合应用、计算能力"]
+];
+
+/* 重要物理量及单位 */
+const UNITS = [
+  ["长度","l","米 (m)"],["时间","t","秒 (s)"],["质量","m","千克 (kg)"],["温度","T","摄氏度 (℃)"],
+  ["电流","I","安培 (A)"],["电压","U","伏特 (V)"],["电阻","R","欧姆 (Ω)"],
+  ["功","W","焦耳 (J)"],["功率","P","瓦特 (W)"],["压强","p","帕斯卡 (Pa)"]
+];
+
+/* 中考高频实验（必考），pt 为对应考点 id */
+const EXPS = [
+  { n:"测量平均速度", pt:"me1-3", icon:"⏱️" },
+  { n:"探究阻力对物体运动的影响", pt:"me2-5", icon:"🛝" },
+  { n:"探究影响滑动摩擦力大小的因素", pt:"me2-4", icon:"🧊" },
+  { n:"伏安法测电阻", pt:"el2-4", icon:"🔌" },
+  { n:"探究浮力大小的影响因素", pt:"me4-2", icon:"⚖️" },
+  { n:"测量小灯泡电功率", pt:"el3-2", icon:"💡" }
+];
+
+const MOTTO = "电学是重点，力学占大头；实验要会做，计算不能丢；基础打牢固，中考不用愁！";
+
+/* 考点标注依据说明（页内展示） */
+const EXAM_SOURCE_NOTE = "考点标注依据：2021–2023 年杭州中考科学卷（自主命题）、2024–2025 年浙江省统一命题卷（杭州、宁波、温州、绍兴同卷）的真题考频分析。浙江中考考综合科目《科学》（满分 160 分），其中物理约 58 分，电学与力学占比最大。分值占比表为全国平均参考，浙江卷力学、电学占比更高。";
+
+</script>
+<script>
+﻿/* ============================================================
+ * 初中物理知识树 · 应用逻辑（v2 · 信息图结构版）
+ * 本地存储 + 可选 GitHub 云同步（用户自行配置 token）
+ * ============================================================ */
+(function () {
+"use strict";
+
+/* ---------- 工具 ---------- */
+const $ = (s, p) => (p || document).querySelector(s);
+const $$ = (s, p) => Array.from((p || document).querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmtDate = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+function hexA(hex, a) {
+  const n = parseInt(hex.slice(1), 16);
+  return "rgba(" + (n >> 16 & 255) + "," + (n >> 8 & 255) + "," + (n & 255) + "," + a + ")";
+}
+let toastTimer = null;
+function toast(msg) {
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 2600);
+}
+/* 某些内置预览/隐私环境会限制 localStorage：读写加保护，降级到内存 */
+const MEM = {};
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return MEM[k] != null ? MEM[k] : null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { MEM[k] = v; } }
+function lsDel(k) { try { localStorage.removeItem(k); } catch (e) { delete MEM[k]; } }
+window.addEventListener("error", e => { toast("页面脚本异常：" + (e.message || "未知错误")); });
+
+/* ---------- 数据索引 ---------- */
+const PT_INDEX = {}, CH_INDEX = {}, MOD_INDEX = {};
+TREE.forEach(mod => {
+  MOD_INDEX[mod.id] = mod;
+  mod.chapters.forEach(ch => {
+    CH_INDEX[ch.id] = { ch, mod };
+    ch.pts.forEach(pt => { PT_INDEX[pt.id] = { pt, ch, mod }; });
+  });
+});
+const ALL_PTS = Object.keys(PT_INDEX);
+const TOTAL_PTS = ALL_PTS.length;
+
+/* ---------- 状态存储 ---------- */
+const LS_KEY = "physTree.v1", LS_SYNC = "physTree.sync";
+let state = { mastered: {}, checkins: [], wrong: [], best: {} };
+function loadState() {
+  try { const raw = lsGet(LS_KEY); if (raw) state = Object.assign(state, JSON.parse(raw)); } catch (e) {}
+}
+let syncCfg = null, cloudSha = null, pushTimer = null;
+function loadSyncCfg() {
+  try { const raw = lsGet(LS_SYNC); if (raw) syncCfg = JSON.parse(raw); } catch (e) {}
+}
+function saveState(quiet) {
+  lsSet(LS_KEY, JSON.stringify(state));
+  renderDynamic();
+  if (syncCfg && syncCfg.repo && syncCfg.token && !quiet) schedulePush();
+}
+
+/* ---------- GitHub 同步 ---------- */
+function b64ToUtf8(b64) {
+  const bin = atob(b64.replace(/\s/g, ""));
+  const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+function utf8ToB64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = ""; bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin);
+}
+function ghHeaders() { return { Authorization: "Bearer " + syncCfg.token, Accept: "application/vnd.github+json" }; }
+function ghUrl() { return "https://api.github.com/repos/" + syncCfg.repo + "/contents/" + encodeURIComponent(syncCfg.file || "progress.json"); }
+async function ghPull() {
+  const r = await fetch(ghUrl() + "?t=" + Date.now(), { headers: ghHeaders() });
+  if (r.status === 404) return null;
+  if (!r.ok) { const j = await r.json().catch(() => ({})); throw new Error(j.message || ("HTTP " + r.status)); }
+  const j = await r.json(); cloudSha = j.sha;
+  return JSON.parse(b64ToUtf8(j.content));
+}
+async function ghPush() {
+  const body = { message: "physics-tree progress update", content: utf8ToB64(JSON.stringify(state)) };
+  if (cloudSha) body.sha = cloudSha;
+  const r = await fetch(ghUrl(), { method: "PUT", headers: ghHeaders(), body: JSON.stringify(body) });
+  if (!r.ok) { const j = await r.json().catch(() => ({})); throw new Error(j.message || ("HTTP " + r.status)); }
+  const j = await r.json(); if (j.content) cloudSha = j.content.sha;
+}
+function mergeState(remote) {
+  if (!remote) return false;
+  state.mastered = Object.assign({}, remote.mastered || {}, state.mastered);
+  state.checkins = Array.from(new Set((remote.checkins || []).concat(state.checkins))).sort();
+  const seen = new Set(state.wrong.map(w => w.q));
+  (remote.wrong || []).forEach(w => { if (!seen.has(w.q)) { state.wrong.push(w); seen.add(w.q); } });
+  state.best = Object.assign({}, remote.best || {});
+  Object.keys(state.best).forEach(k => { state.best[k] = Math.max(state.best[k], (remote.best && remote.best[k]) || 0); });
+  return true;
+}
+function schedulePush() {
+  clearTimeout(pushTimer);
+  pushTimer = setTimeout(async () => {
+    try { await ghPush(); setSyncChip(true); }
+    catch (e) { setSyncChip(false, e.message); }
+  }, 1200);
+}
+function setSyncChip(ok, msg) {
+  const chip = $("#syncChip");
+  if (!syncCfg || !syncCfg.repo || !syncCfg.token) { chip.className = "chip off"; chip.textContent = "☁ 本地模式"; return; }
+  if (ok) { chip.className = "chip"; chip.textContent = "☁ 已同步"; }
+  else { chip.className = "chip off"; chip.textContent = "☁ 同步失败"; if (msg) console.warn("sync:", msg); }
+}
+function ghErrText(err) {
+  const m = String(err && err.message || "");
+  if (/Bad credentials/i.test(m)) return "Token 无效或已过期，请重新生成并粘贴";
+  if (/Not Found/i.test(m)) return "仓库不存在或不是私有可访问：请核对「用户名/仓库名」是否填对";
+  if (/Forbidden|must have.*permission|Resource not accessible/i.test(m)) return "Token 缺少权限：创建时请给该仓库的 Contents 选 Read and write";
+  if (/Failed to fetch|NetworkError/i.test(m)) return "网络连不上 GitHub：请检查网络（GitHub 在国内有时需要换网络环境重试）";
+  return m;
+}
+function renderSyncStatus(text, cls) {
+  const el = $("#syncStat"); el.className = "sync-status " + cls; el.textContent = text;
+}
+
+/* ---------- 视图切换 ---------- */
+const VIEWS = ["home", "tree", "hot", "quizhub", "quiz", "wrong", "dash", "sync"];
+let curView = "home", curModule = null;
+function showView(v) {
+  curView = v;
+  VIEWS.forEach(x => $("#v-" + x).classList.toggle("active", x === v));
+  $$("nav button").forEach(b => b.classList.toggle("on", b.dataset.go === v));
+  window.scrollTo({ top: 0 });
+  if (v === "tree") renderTree();
+  if (v === "home") renderHome();
+  if (v === "hot") renderHot();
+  if (v === "quizhub") renderQuizHub();
+  if (v === "wrong") renderWrong();
+  if (v === "dash") renderDash();
+  if (v === "sync") renderSyncPage();
+}
+
+/* ---------- 统计 ---------- */
+function masteredCount(modId) {
+  if (!modId) return ALL_PTS.filter(id => state.mastered[id]).length;
+  return MOD_INDEX[modId].chapters.reduce((n, ch) => n + ch.pts.filter(p => state.mastered[p.id]).length, 0);
+}
+function modTotal(modId) { return MOD_INDEX[modId].chapters.reduce((n, ch) => n + ch.pts.length, 0); }
+function calcStreak() {
+  const set = new Set(state.checkins); let n = 0; const d = new Date();
+  if (!set.has(fmtDate(d))) d.setDate(d.getDate() - 1);
+  while (set.has(fmtDate(d))) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+function checkedToday() { return state.checkins.includes(fmtDate(new Date())); }
+
+/* ---------- 首页：信息图结构 ---------- */
+function donutSVG() {
+  const R = 52, C = 2 * Math.PI * R;
+  let acc = 0, segs = "";
+  DONUT.forEach(d => {
+    const len = C * d.p / 100;
+    segs += '<circle cx="70" cy="70" r="' + R + '" fill="none" stroke="' + d.color + '" stroke-width="20" ' +
+      'stroke-dasharray="' + len.toFixed(1) + " " + (C - len).toFixed(1) + '" ' +
+      'stroke-dashoffset="' + (-acc).toFixed(1) + '" transform="rotate(-90 70 70)"/>';
+    acc += len;
+  });
+  return '<svg viewBox="0 0 140 140" class="donut-svg">' + segs +
+    '<text x="70" y="64" class="d1">物理</text><text x="70" y="82" class="d2">≈58分</text></svg>';
+}
+function stars(n) { let s = ""; for (let i = 0; i < 5; i++) s += i < n ? "★" : "☆"; return s; }
+function renderHome() {
+  const pct = Math.round(masteredCount() / TOTAL_PTS * 100);
+  $("#heroPct").textContent = pct;
+  $("#heroRing").style.strokeDashoffset = String(232.5 * (1 - pct / 100));
+  $("#streakNum").textContent = calcStreak();
+  const btn = $("#checkinBtn");
+  if (checkedToday()) { btn.textContent = "今日已打卡 ✓"; btn.classList.add("done"); btn.disabled = true; }
+  else { btn.textContent = "打卡"; btn.classList.remove("done"); btn.disabled = false; }
+
+  /* 一图掌握：九大模块卡 */
+  const grid = $("#modGrid"); grid.innerHTML = "";
+  TREE.forEach(mod => {
+    const mc = masteredCount(mod.id), mt = modTotal(mod.id), p = Math.round(mc / mt * 100);
+    const div = document.createElement("div");
+    div.className = "card map-card";
+    div.style.borderColor = hexA(mod.color, .35);
+    const pts = [];
+    mod.chapters.forEach(ch => ch.pts.forEach(pt => pts.push(pt.n)));
+    const brief = pts.slice(0, 4).join(" · ");
+    div.innerHTML =
+      '<div class="map-h" style="background:linear-gradient(90deg,' + hexA(mod.color, .8) + "," + hexA(mod.color, .35) + ')">' +
+        '<b>' + mod.no + "</b>" + esc(mod.name) + '<span class="mh-ic">' + mod.icon + "</span></div>" +
+      '<div class="map-b"><p class="brief">' + esc(brief) + (pts.length > 4 ? " …" : "") + "</p>" +
+      '<div class="fchips">' + (mod.formulas || []).map(f => '<span class="fchip">' + esc(f) + "</span>").join("") + "</div>" +
+      '<div class="bar"><b style="width:' + p + "%;background:" + mod.color + '"></b></div>' +
+      '<div class="pct">' + mc + "/" + mt + " · 掌握 " + p + "%</div></div>";
+    div.addEventListener("click", () => { curModule = mod.id; showView("tree"); });
+    grid.appendChild(div);
+  });
+
+  /* 考情面板：分值占比 + 排行 + 物理量 + 题型 + 实验 + 口诀 */
+  const board = $("#boardWrap");
+  let html = '<div class="card panel"><h4 class="ph">一、各模块分值占比（物理部分）</h4><div class="donut-row">' + donutSVG() +
+    '<ul class="dleg">' + DONUT.map(d => '<li><i style="background:' + d.color + '"></i><b>' + d.name + "</b><em>" + d.range + " · " + d.pts + "</em></li>").join("") + "</ul></div>" +
+    '<p class="fnote">※ 占比为全国平均参考；浙江统考卷中力学、电学占比更高。详见各考点标注。</p></div>';
+
+  html += '<div class="card panel"><h4 class="ph">二、重点知识排行（按重要性）</h4><div class="ranks">' +
+    RANKS.map(r => '<div class="rank" data-mod="' + r.mod + '"><span class="rk r' + Math.min(r.r, 3) + '">' + r.r + "</span>" +
+      '<div class="ri"><b>' + r.name + "</b><p>" + esc(r.sub) + "</p></div>" +
+      '<div class="rr"><span class="st">' + stars(r.stars) + '</span><em>' + r.freq + "</em></div></div>").join("") +
+    "</div></div>";
+
+  html += '<div class="card panel"><h4 class="ph">三、题型分值分布（参考）</h4><table class="qtab"><tr><th>题型</th><th>分值</th><th>占比</th><th>考查重点</th></tr>' +
+    QTYPES.map(q => "<tr><td>" + q[0] + "</td><td>" + q[1] + "</td><td>" + q[2] + "</td><td>" + esc(q[3]) + "</td></tr>").join("") + "</table></div>";
+
+  html += '<div class="card panel"><h4 class="ph">四、高频实验（必考）</h4><div class="exps">' +
+    EXPS.map(e => '<div class="exp" data-pt="' + e.pt + '"><span class="ex-ic">' + e.icon + "</span><b>" + esc(e.n) + "</b></div>").join("") +
+    "</div></div>";
+
+  html += '<div class="card panel"><h4 class="ph">五、重要物理量及单位</h4><div class="units">' +
+    UNITS.map(u => '<div class="unit"><span>' + u[0] + '</span><i>' + u[1] + "</i><em>" + u[2] + "</em></div>").join("") +
+    "</div></div>";
+
+  html += '<div class="motto card">🏆 记住口诀：' + MOTTO + "</div>";
+  board.innerHTML = html;
+
+  $$(".rank", board).forEach(el => el.addEventListener("click", () => { curModule = el.dataset.mod; showView("tree"); }));
+  $$(".exp", board).forEach(el => el.addEventListener("click", () => openSheet(el.dataset.pt)));
+}
+function renderDynamic() {
+  $("#streakNum").textContent = calcStreak();
+  const btn = $("#checkinBtn");
+  if (checkedToday()) { btn.textContent = "今日已打卡 ✓"; btn.classList.add("done"); btn.disabled = true; }
+  else { btn.textContent = "打卡"; btn.classList.remove("done"); btn.disabled = false; }
+  const pct = Math.round(masteredCount() / TOTAL_PTS * 100);
+  $("#heroPct").textContent = pct;
+  $("#heroRing").style.strokeDashoffset = String(232.5 * (1 - pct / 100));
+  $$("#modGrid .map-card").forEach((card, i) => {
+    const mod = TREE[i]; if (!mod) return;
+    const mc = masteredCount(mod.id), mt = modTotal(mod.id), p = Math.round(mc / mt * 100);
+    const bar = $(".bar b", card); if (bar) bar.style.width = p + "%";
+    const pc = $(".pct", card); if (pc) pc.textContent = mc + "/" + mt + " · 掌握 " + p + "%";
+  });
+}
+
+/* ---------- 打卡 ---------- */
+function doCheckin() {
+  if (checkedToday()) return;
+  state.checkins.push(fmtDate(new Date()));
+  saveState();
+  toast("打卡成功！连续打卡 " + calcStreak() + " 天 🔥");
+}
+
+/* ---------- 知识树 ---------- */
+function lvBadge(lv) {
+  const m = LEVEL_META[lv];
+  return '<span class="lv ' + m.cls + '">' + m.icon + " " + m.label + "</span>";
+}
+function renderTree() {
+  const crumb = $("#crumb"), body = $("#treeBody");
+  if (!curModule) {
+    crumb.innerHTML = '<a data-go="home">🏠 主页</a><span>›</span><b>选择知识模块</b>';
+    body.innerHTML = "";
+    const grid = document.createElement("div"); grid.className = "mod-grid";
+    TREE.forEach(mod => {
+      const div = document.createElement("div");
+      div.className = "card mod-card"; div.style.setProperty("--mc", hexA(mod.color, .2));
+      const mc = masteredCount(mod.id), mt = modTotal(mod.id);
+      div.innerHTML = '<div class="ic">' + mod.icon + '</div><h4>' + mod.no + " " + mod.name + "</h4><p>" + esc(mod.desc) + "</p>" +
+        '<div class="pct">' + mod.chapters.length + " 章 · " + mt + " 个考点 · 已掌握 " + mc + "</div>";
+      div.addEventListener("click", () => { curModule = mod.id; renderTree(); });
+      grid.appendChild(div);
+    });
+    body.appendChild(grid);
+    return;
+  }
+  const mod = MOD_INDEX[curModule];
+  crumb.innerHTML = '<a data-go="home">🏠 主页</a><span>›</span><a id="treeBack">' + mod.icon + " " + mod.name + " 总览</a>";
+  $("#treeBack").addEventListener("click", () => { curModule = null; renderTree(); });
+  body.innerHTML = "";
+  if (mod.formulas && mod.formulas.length) {
+    const fb = document.createElement("div"); fb.className = "card modf";
+    fb.innerHTML = '<h5>核心公式</h5><div class="fchips">' + mod.formulas.map(f => '<span class="fchip">' + esc(f) + "</span>").join("") + "</div>";
+    body.appendChild(fb);
+  }
+  mod.chapters.forEach(ch => {
+    const box = document.createElement("div"); box.className = "card chap";
+    const mc = ch.pts.filter(p => state.mastered[p.id]).length;
+    box.innerHTML =
+      '<div class="chap-h"><div class="ci">' + mod.icon + '</div><div style="flex:1"><h4>' + esc(ch.name) + '</h4><div class="zj">' + esc(ch.zj || "") + '</div></div>' +
+      '<span class="cnt">' + mc + "/" + ch.pts.length + '</span><span class="arr">▸</span></div><div class="chap-body"></div>';
+    const bd = $(".chap-body", box);
+    ch.pts.forEach(pt => {
+      const row = document.createElement("div");
+      row.className = "pt-row" + (state.mastered[pt.id] ? " mastered" : "");
+      row.innerHTML = '<span class="mst">✓</span><span class="nm">' + esc(pt.n) + "</span>" + lvBadge(pt.lv);
+      row.addEventListener("click", () => openSheet(pt.id));
+      bd.appendChild(row);
+    });
+    const qb = document.createElement("div"); qb.className = "chap-quizbar";
+    qb.innerHTML = "🎯 本章自测 · " + ch.quiz.length + " 题" + (state.best[ch.id] != null ? ' <span class="cnt">最佳 ' + state.best[ch.id] + "/" + ch.quiz.length + "</span>" : "");
+    const qbtn = document.createElement("button"); qbtn.className = "btn small"; qbtn.textContent = "开始挑战";
+    qbtn.addEventListener("click", e => { e.stopPropagation(); startQuiz(ch.id); });
+    qb.appendChild(qbtn); bd.appendChild(qb);
+    $(".chap-h", box).addEventListener("click", () => box.classList.toggle("open"));
+    body.appendChild(box);
+  });
+}
+
+/* ---------- 必考清单 ---------- */
+function renderHot() {
+  const body = $("#hotBody"); body.innerHTML = "";
+  TREE.forEach(mod => {
+    const hots = [];
+    mod.chapters.forEach(ch => ch.pts.forEach(pt => { if (pt.lv === 3) hots.push(pt); }));
+    if (!hots.length) return;
+    const sec = document.createElement("h2"); sec.className = "sec"; sec.textContent = mod.no + " " + mod.icon + " " + mod.name;
+    body.appendChild(sec);
+    hots.forEach(pt => {
+      const row = document.createElement("div");
+      row.className = "card pt-row" + (state.mastered[pt.id] ? " mastered" : "");
+      row.style.marginBottom = "8px";
+      row.innerHTML = '<span class="mst">✓</span><span class="nm">' + esc(pt.n) + '</span><span style="font-size:11px;color:var(--tx3)">' + esc(PT_INDEX[pt.id].ch.name) + "</span>" + lvBadge(3);
+      row.addEventListener("click", () => openSheet(pt.id));
+      body.appendChild(row);
+    });
+  });
+}
+
+/* ---------- 考点详情弹层 ---------- */
+function openSheet(ptId) {
+  const { pt, ch, mod } = PT_INDEX[ptId];
+  const m = LEVEL_META[pt.lv];
+  let html = '<div class="grab"></div>' +
+    '<h3>' + esc(pt.n) + "</h3>" +
+    '<div class="meta">' + lvBadge(pt.lv) + '<span class="tchip">' + mod.no + " " + mod.icon + " " + esc(mod.name) + '</span><span class="tchip">' + esc(ch.name) + "</span></div>" +
+    '<div class="src">' + esc(ch.zj || "") + " · " + m.tip + "</div>" +
+    '<div style="height:12px"></div>';
+  if (pt.anim && ANIMS[pt.anim]) html += '<div class="anim-box">' + ANIMS[pt.anim] + '<div class="anim-cap">原理动画演示</div></div>';
+  html += '<div class="blk"><h5>📖 核心讲解</h5><p>' + esc(pt.sum) + "</p></div>";
+  if (pt.ex) html += '<div class="blk ex"><h5>🎬 真题举例 · 考试里的它</h5><p>' + esc(pt.ex) + "</p></div>";
+  if (pt.types && pt.types.length) html += '<div class="blk"><h5>📝 常见题型</h5><p>' + pt.types.map(t => '<span class="tchip">' + esc(t) + "</span>").join("") + "</p></div>";
+  if (pt.wrong && pt.wrong.length) html += '<div class="blk warn"><h5>⚠️ 易错提醒</h5>' + pt.wrong.map(w => "<p>· " + esc(w) + "</p>").join("") + "</div>";
+  if (pt.ev) html += '<div class="blk ev"><h5>🏆 考频情报</h5><p>' + esc(pt.ev) + "</p></div>";
+  html += '<div class="sheet-actions">' +
+    '<button class="btn ' + (state.mastered[ptId] ? "done" : "") + '" id="sheetMst">' + (state.mastered[ptId] ? "已掌握 ✓（点击取消）" : "标记为已掌握") + "</button>" +
+    '<button class="btn ghost" id="sheetQuiz">本章自测</button></div>';
+  const sheet = $("#sheet");
+  sheet.innerHTML = html;
+  sheet.classList.add("show"); $("#mask").classList.add("show");
+  $("#sheetMst").addEventListener("click", () => {
+    if (state.mastered[ptId]) delete state.mastered[ptId]; else state.mastered[ptId] = true;
+    saveState(); closeSheet();
+    if (curView === "tree") renderTree(); if (curView === "hot") renderHot(); if (curView === "wrong") renderWrong();
+    if (curView === "home") renderHome();
+    toast(state.mastered[ptId] ? "已标记掌握，继续加油！" : "已取消掌握标记");
+  });
+  $("#sheetQuiz").addEventListener("click", () => { closeSheet(); startQuiz(ch.id); });
+}
+function closeSheet() { $("#sheet").classList.remove("show"); $("#mask").classList.remove("show"); }
+
+/* ---------- 测验 ---------- */
+let quiz = null;
+function startQuiz(chId, wrongEntry) {
+  const ch = CH_INDEX[chId];
+  let qs, title, single = null;
+  if (wrongEntry) {
+    qs = [{ q: wrongEntry.q, o: wrongEntry.o, a: wrongEntry.a, e: wrongEntry.e }];
+    title = "错题重做"; single = wrongEntry;
+  } else {
+    qs = ch.ch.quiz.slice(); title = ch.ch.name;
+  }
+  quiz = { chId, title, qs, idx: 0, score: 0, wrongs: [], answered: false, single };
+  showView("quiz");
+  renderQuizQ();
+}
+function renderQuizQ() {
+  $("#quizTitle").textContent = quiz.title;
+  const body = $("#quizBody");
+  if (quiz.idx >= quiz.qs.length) { renderQuizEnd(); return; }
+  $("#quizProg").style.width = (quiz.idx / quiz.qs.length * 100) + "%";
+  const q = quiz.qs[quiz.idx];
+  const tags = ["A", "B", "C", "D"];
+  body.innerHTML = '<div class="card qcard"><div class="qt">' + (quiz.qs.length > 1 ? (quiz.idx + 1) + ". " : "") + esc(q.q) + "</div>" +
+    q.o.map((op, i) => '<div class="opt" data-i="' + i + '"><span class="tag">' + tags[i] + "</span><span>" + esc(op) + "</span></div>").join("") +
+    '<div class="explain" id="expl"></div>' +
+    '<div class="quiz-foot"><button class="btn" id="nextBtn" style="display:none">' + (quiz.idx === quiz.qs.length - 1 ? "查看战绩" : "下一题") + "</button></div></div>";
+  quiz.answered = false;
+  $$(".opt", body).forEach(el => el.addEventListener("click", () => answer(el)));
+  $("#nextBtn").addEventListener("click", () => { quiz.idx++; renderQuizQ(); });
+}
+function answer(el) {
+  if (quiz.answered) return;
+  quiz.answered = true;
+  const q = quiz.qs[quiz.idx], i = Number(el.dataset.i);
+  const opts = $$(".opt", $("#quizBody"));
+  opts.forEach(o => o.classList.add("disabled"));
+  opts[q.a].classList.add("right");
+  const expl = $("#expl");
+  if (i === q.a) {
+    quiz.score++;
+    expl.innerHTML = "<b>✔ 回答正确！</b><br>" + esc(q.e);
+    if (quiz.single) removeWrong(quiz.single.q);
+  } else {
+    el.classList.add("wrong");
+    expl.innerHTML = "<b>✘ 答错了</b> 正确答案是 " + ["A", "B", "C", "D"][q.a] + "<br>" + esc(q.e);
+    quiz.wrongs.push(q);
+  }
+  expl.classList.add("show");
+  $("#nextBtn").style.display = "flex";
+  $("#quizProg").style.width = ((quiz.idx + 1) / quiz.qs.length * 100) + "%";
+}
+function removeWrong(qText) {
+  state.wrong = state.wrong.filter(w => w.q !== qText);
+}
+function renderQuizEnd() {
+  $("#quizProg").style.width = "100%";
+  const total = quiz.qs.length, score = quiz.score;
+  const pct = Math.round(score / total * 100);
+  let comment = pct === 100 ? "满分通关！你就是物理王者 🏆" : pct >= 80 ? "非常稳！离满分只差一步 ⚡" : pct >= 60 ? "基础不错，把错题吃透再来 💪" : "别灰心，先看完解析再战一轮 🔧";
+  quiz.wrongs.forEach(q => {
+    if (!state.wrong.some(w => w.q === q.q)) {
+      state.wrong.push({ q: q.q, o: q.o, a: q.a, e: q.e, from: quiz.title, t: Date.now() });
+    }
+  });
+  if (!quiz.single) {
+    if (state.best[quiz.chId] == null || score > state.best[quiz.chId]) state.best[quiz.chId] = score;
+  }
+  saveState(true);
+  if (syncCfg && syncCfg.repo && syncCfg.token) schedulePush();
+  const body = $("#quizBody");
+  body.innerHTML = '<div class="card score-hero"><div class="big">' + score + " / " + total + "</div><p>" + comment + "</p>" +
+    (quiz.wrongs.length ? '<p style="color:var(--rd);font-size:12.5px;margin-top:6px">' + quiz.wrongs.length + " 道错题已收入错题本</p>" : '<p style="color:var(--gn);font-size:12.5px;margin-top:6px">本关零失误 🎉</p>') +
+    '<div class="quiz-foot" style="margin-top:20px"><button class="btn" id="againBtn">再战一次</button><button class="btn ghost" id="backBtn">返回</button></div></div>';
+  $("#againBtn").addEventListener("click", () => startQuiz(quiz.chId, quiz.single));
+  $("#backBtn").addEventListener("click", () => showView(quiz.single ? "wrong" : "quizhub"));
+}
+
+/* ---------- 自测中心 ---------- */
+function renderQuizHub() {
+  const body = $("#quizhubBody"); body.innerHTML = "";
+  TREE.forEach(mod => {
+    const sec = document.createElement("h2"); sec.className = "sec"; sec.textContent = mod.no + " " + mod.icon + " " + mod.name;
+    body.appendChild(sec);
+    mod.chapters.forEach(ch => {
+      const box = document.createElement("div");
+      box.className = "card chap-quizbar"; box.style.marginBottom = "8px";
+      box.innerHTML = '<div style="flex:1"><div style="font-size:14px">' + esc(ch.name) + '</div><div class="zj">' + ch.quiz.length + " 题" +
+        (state.best[ch.id] != null ? " · 最佳 " + state.best[ch.id] + "/" + ch.quiz.length + "</div>" : "</div>");
+      const btn = document.createElement("button");
+      btn.className = "btn small"; btn.textContent = "开始挑战";
+      btn.addEventListener("click", () => startQuiz(ch.id));
+      box.appendChild(btn);
+      body.appendChild(box);
+    });
+  });
+}
+
+/* ---------- 错题本 ---------- */
+function renderWrong() {
+  const body = $("#wrongBody"); body.innerHTML = "";
+  if (!state.wrong.length) {
+    body.innerHTML = '<div class="empty"><div class="ei">🎉</div><p>错题本是空的<br>保持这个状态，中考稳了！</p></div>';
+    return;
+  }
+  state.wrong.slice().reverse().forEach(w => {
+    const item = document.createElement("div");
+    item.className = "card wb-item";
+    item.innerHTML = '<div class="from">📕 ' + esc(w.from || "自测") + '</div><div class="q">' + esc(w.q) + "</div>" +
+      '<div class="acts"><button class="btn small ghost">重做</button><button class="btn small">已掌握，移除</button></div>';
+    const btns = $$(".btn", item);
+    btns[0].addEventListener("click", () => startQuiz(findChByQ(w) || "me2", w));
+    btns[1].addEventListener("click", () => { removeWrong(w.q); saveState(); renderWrong(); toast("已移除，掌握牢固！"); });
+    body.appendChild(item);
+  });
+}
+function findChByQ(w) {
+  for (const id in CH_INDEX) if (CH_INDEX[id].ch.quiz.some(q => q.q === w.q)) return id;
+  return null;
+}
+
+/* ---------- 进度看板 ---------- */
+function renderDash() {
+  const mc = masteredCount(), pct = Math.round(mc / TOTAL_PTS * 100);
+  const stats = [
+    { v: mc + "/" + TOTAL_PTS, l: "考点掌握" },
+    { v: pct + "%", l: "总掌握率" },
+    { v: calcStreak(), l: "连续打卡" },
+    { v: state.checkins.length, l: "累计打卡" },
+    { v: state.wrong.length, l: "待消灭错题" },
+    { v: Object.keys(state.best).length, l: "已挑战章节" }
+  ];
+  $("#dashStats").innerHTML = stats.map(s => '<div class="card stat"><div class="sv">' + s.v + '</div><div class="sl">' + s.l + "</div></div>").join("");
+  renderCal();
+  const dm = $("#dashMods"); dm.innerHTML = "";
+  TREE.forEach(mod => {
+    const mc2 = masteredCount(mod.id), mt = modTotal(mod.id), p = Math.round(mc2 / mt * 100);
+    const row = document.createElement("div");
+    row.className = "card dash-mod";
+    row.innerHTML = '<div class="ic">' + mod.icon + '</div><div class="info"><div class="nm"><span>' + mod.no + " " + mod.name + "</span><em>" + mc2 + "/" + mt + " · " + p + '%</em></div><div class="bar"><b style="width:' + p + '%"></b></div></div>';
+    dm.appendChild(row);
+  });
+}
+function renderCal() {
+  const now = new Date(), y = now.getFullYear(), m = now.getMonth();
+  $("#calTitle").textContent = y + " 年 " + (m + 1) + " 月";
+  const hits = new Set(state.checkins);
+  const first = new Date(y, m, 1).getDay();
+  const days = new Date(y, m + 1, 0).getDate();
+  let html = ["日", "一", "二", "三", "四", "五", "六"].map(w => '<div class="wd">' + w + "</div>").join("");
+  for (let i = 0; i < first; i++) html += "<div></div>";
+  let monthHits = 0;
+  for (let d = 1; d <= days; d++) {
+    const key = y + "-" + String(m + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+    const cls = ["day", key === fmtDate(new Date()) ? "today" : "", hits.has(key) ? "hit" : ""].join(" ");
+    if (hits.has(key)) monthHits++;
+    html += '<div class="' + cls + '">' + d + "</div>";
+  }
+  $("#calGrid").innerHTML = html;
+  $("#calCount").textContent = "本月打卡 " + monthHits + " 天";
+}
+
+/* ---------- 同步设置页 ---------- */
+function renderSyncPage() {
+  if (syncCfg) {
+    $("#inRepo").value = syncCfg.repo || "";
+    $("#inToken").value = syncCfg.token || "";
+    $("#inFile").value = syncCfg.file || "progress.json";
+    renderSyncStatus("已配置同步仓库：" + syncCfg.repo + "。进度会在每次学习操作后自动上传，也可手动拉取云端数据。", "ok");
+  } else {
+    renderSyncStatus("当前为本地模式：数据保存在本设备浏览器中。配置 GitHub 后，手机和 iPad 打开同一页面即可共享学习进度。", "info");
+  }
+}
+
+/* ---------- 原理动画（内联 SVG，同 v1） ---------- */
+const ANIM_STYLE = '<style>' +
+  ".swing{animation:swingK 2.2s ease-in-out infinite}" +
+  "@keyframes swingK{0%,100%{transform:rotate(24deg)}50%{transform:rotate(-24deg)}}" +
+  ".piston{animation:pistonK 1.6s ease-in-out infinite}" +
+  "@keyframes pistonK{0%,100%{transform:translateY(0)}50%{transform:translateY(14px)}}" +
+  ".slider{animation:sliderK 2s ease-in-out infinite}" +
+  "@keyframes sliderK{0%,100%{transform:translateX(0)}50%{transform:translateX(26px)}}" +
+  ".swim{animation:swimK 2.4s ease-in-out infinite}" +
+  "@keyframes swimK{0%,100%{transform:scale(1)}50%{transform:scale(1.45)}}" +
+  "</style>";
+const ANIMS = {
+  sound: '<svg viewBox="0 0 300 120">' + ANIM_STYLE +
+    '<polygon points="70,45 110,30 110,90 70,75" fill="#4d8dff"/>' +
+    '<path class="pulse" d="M125 40 Q140 60 125 80" stroke="#00e5ff" stroke-width="3" fill="none"/>' +
+    '<path class="pulse" style="animation-delay:.4s" d="M145 28 Q168 60 145 92" stroke="#00e5ff" stroke-width="3" fill="none"/>' +
+    '<path class="pulse" style="animation-delay:.8s" d="M165 16 Q196 60 165 104" stroke="#00e5ff" stroke-width="3" fill="none"/>' +
+    '<text x="210" y="64" class="lbl2">振动发声</text></svg>',
+  reflect: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<line x1="30" y1="100" x2="270" y2="100" stroke="#9db4d8" stroke-width="2"/>' +
+    '<rect x="30" y="100" width="240" height="6" fill="rgba(157,180,216,.25)"/>' +
+    '<line x1="150" y1="100" x2="150" y2="20" stroke="#5f7699" stroke-width="1.5" stroke-dasharray="4 4"/>' +
+    '<line class="ray" x1="60" y1="30" x2="150" y2="100"/>' +
+    '<line class="ray" x1="150" y1="100" x2="240" y2="30"/>' +
+    '<text x="52" y="24" class="lbl">入射光线</text><text x="212" y="24" class="lbl">反射光线</text>' +
+    '<text x="155" y="30" class="lbl">法线</text><text x="98" y="70" class="lbl2">入射角</text><text x="172" y="70" class="lbl2">反射角</text></svg>',
+  mirror: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<line x1="150" y1="15" x2="150" y2="115" stroke="#00e5ff" stroke-width="2.5"/>' +
+    '<g><rect x="70" y="55" width="14" height="34" rx="3" fill="#ffd166"/><line x1="77" y1="55" x2="77" y2="42" stroke="#ff7a59" stroke-width="2"/><circle class="pulse" cx="77" cy="38" r="4" fill="#ff7a59"/></g>' +
+    '<g opacity=".45"><rect x="216" y="55" width="14" height="34" rx="3" fill="none" stroke="#ffd166" stroke-dasharray="3 3"/><circle cx="223" cy="38" r="4" fill="none" stroke="#ff7a59" stroke-dasharray="2 2"/></g>' +
+    '<line x1="84" y1="72" x2="150" y2="72" stroke="#5f7699" stroke-dasharray="4 4" stroke-width="1.5"/>' +
+    '<line x1="150" y1="72" x2="216" y2="72" stroke="#5f7699" stroke-dasharray="4 4" stroke-width="1.5"/>' +
+    '<text x="62" y="105" class="lbl">物</text><text x="220" y="105" class="lbl">等大虚像</text><text x="100" y="66" class="lbl">等距</text><text x="168" y="66" class="lbl">等距</text></svg>',
+  refract: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<rect x="0" y="65" width="300" height="65" fill="rgba(77,141,255,.16)"/>' +
+    '<line x1="0" y1="65" x2="300" y2="65" stroke="#4d8dff" stroke-width="2"/>' +
+    '<line x1="150" y1="10" x2="150" y2="125" stroke="#5f7699" stroke-width="1.5" stroke-dasharray="4 4"/>' +
+    '<line class="ray" x1="60" y1="20" x2="150" y2="65"/>' +
+    '<line class="ray" x1="150" y1="65" x2="195" y2="122"/>' +
+    '<text x="40" y="16" class="lbl">空气</text><text x="40" y="82" class="lbl">水</text>' +
+    '<text x="96" y="46" class="lbl2">入射角大</text><text x="186" y="92" class="lbl2">折射角小</text></svg>',
+  lens: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<line x1="10" y1="65" x2="290" y2="65" stroke="#5f7699" stroke-width="1.5" stroke-dasharray="4 4"/>' +
+    '<ellipse cx="150" cy="65" rx="10" ry="46" fill="rgba(0,229,255,.15)" stroke="#00e5ff" stroke-width="2"/>' +
+    '<line class="ray" x1="20" y1="35" x2="150" y2="35"/><line class="ray" x1="150" y1="35" x2="255" y2="78"/>' +
+    '<line class="ray" x1="20" y1="95" x2="150" y2="95"/><line class="ray" x1="150" y1="95" x2="255" y2="52"/>' +
+    '<circle cx="255" cy="65" r="4" fill="#ffd166" class="pulse"/>' +
+    '<text x="243" y="56" class="lbl2">焦点 F</text><text x="20" y="28" class="lbl">平行光会聚</text></svg>',
+  melt: '<svg viewBox="0 0 300 140">' + ANIM_STYLE +
+    '<polyline points="20,110 80,80 170,80 260,35" fill="none" stroke="#00e5ff" stroke-width="2.5"/>' +
+    '<circle r="5" fill="#ffd166"><animateMotion dur="4s" repeatCount="indefinite" path="M20,110 L80,80 L170,80 L260,35"/></circle>' +
+    '<text x="30" y="128" class="lbl">吸热升温</text><text x="98" y="70" class="lbl2">熔点·温度不变(固液共存)</text><text x="215" y="28" class="lbl">液态升温</text>' +
+    '<line x1="20" y1="120" x2="260" y2="120" stroke="#5f7699" stroke-width="1"/><line x1="20" y1="120" x2="20" y2="25" stroke="#5f7699" stroke-width="1"/></svg>',
+  piston: '<svg viewBox="0 0 300 140">' + ANIM_STYLE +
+    '<rect x="115" y="30" width="70" height="90" fill="none" stroke="#9db4d8" stroke-width="2.5"/>' +
+    '<g class="piston"><rect x="118" y="34" width="64" height="12" fill="#4d8dff"/><line x1="150" y1="34" x2="150" y2="12" stroke="#9db4d8" stroke-width="4"/></g>' +
+    '<circle cx="135" cy="80" r="4" fill="#ff7a59" class="pulse"/><circle cx="155" cy="95" r="4" fill="#ff7a59" class="pulse" style="animation-delay:.3s"/><circle cx="168" cy="72" r="4" fill="#ff7a59" class="pulse" style="animation-delay:.6s"/><circle cx="140" cy="105" r="4" fill="#ff7a59" class="pulse" style="animation-delay:.9s"/>' +
+    '<text x="196" y="60" class="lbl2">压缩气体做功</text><text x="196" y="78" class="lbl">机械能 → 内能</text><text x="196" y="96" class="lbl">气体温度升高</text></svg>',
+  pressure: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<line x1="20" y1="105" x2="280" y2="105" stroke="#9db4d8" stroke-width="2.5"/>' +
+    '<rect x="50" y="60" width="40" height="45" fill="#4d8dff" rx="3"/><rect x="200" y="80" width="60" height="25" fill="#b388ff" rx="3"/>' +
+    '<line x1="70" y1="30" x2="70" y2="56" stroke="#ffd166" stroke-width="3"/><polygon points="70,58 65,48 75,48" fill="#ffd166"/>' +
+    '<line x1="230" y1="50" x2="230" y2="76" stroke="#ffd166" stroke-width="3"/><polygon points="230,78 225,68 235,68" fill="#ffd166"/>' +
+    '<text x="40" y="122" class="lbl">受力面积小·压强大</text><text x="186" y="122" class="lbl">受力面积大·压强小</text>' +
+    '<text x="105" y="52" class="lbl2">p = F / S</text></svg>',
+  liquid: '<svg viewBox="0 0 300 140">' + ANIM_STYLE +
+    '<path d="M90 20 L90 120 L210 120 L210 20" fill="rgba(77,141,255,.18)" stroke="#9db4d8" stroke-width="2"/>' +
+    '<line x1="92" y1="40" x2="208" y2="40" stroke="#4d8dff" stroke-width="1.5"/>' +
+    '<line x1="90" y1="55" x2="72" y2="55" stroke="#00e5ff" stroke-width="2"/><line x1="90" y1="85" x2="62" y2="85" stroke="#00e5ff" stroke-width="3"/><line x1="90" y1="110" x2="50" y2="110" stroke="#00e5ff" stroke-width="4"/>' +
+    '<circle class="bubble" cx="150" cy="108" r="4" fill="none" stroke="#cfe9ff" stroke-width="1.5"/><circle class="bubble" style="animation-delay:1s" cx="170" cy="112" r="3" fill="none" stroke="#cfe9ff" stroke-width="1.5"/>' +
+    '<text x="216" y="60" class="lbl">浅·压强小</text><text x="216" y="90" class="lbl2">p = ρgh</text><text x="216" y="112" class="lbl">深·压强大</text></svg>',
+  archimedes: '<svg viewBox="0 0 300 140">' + ANIM_STYLE +
+    '<rect x="70" y="50" width="100" height="70" fill="rgba(77,141,255,.2)" stroke="#9db4d8" stroke-width="2"/>' +
+    '<rect x="100" y="70" width="40" height="35" fill="#ffd166" rx="3" class="floaty"/>' +
+    '<line x1="120" y1="12" x2="120" y2="70" stroke="#9db4d8" stroke-width="2" stroke-dasharray="3 3"/>' +
+    '<line x1="120" y1="105" x2="120" y2="126" stroke="#00e5ff" stroke-width="3"/><polygon points="120,103 115,113 125,113" fill="#00e5ff"/>' +
+    '<text x="128" y="120" class="lbl2">F浮</text>' +
+    '<text x="185" y="70" class="lbl2">F浮 = ρ液 g V排</text><text x="185" y="90" class="lbl">浮力只与液体密度</text><text x="185" y="106" class="lbl">和排开体积有关</text></svg>',
+  fish: '<svg viewBox="0 0 300 140">' + ANIM_STYLE +
+    '<rect x="0" y="20" width="300" height="120" fill="rgba(77,141,255,.14)"/>' +
+    '<g class="floaty"><ellipse cx="120" cy="80" rx="45" ry="22" fill="#ffd166"/><polygon points="163,80 185,66 185,94" fill="#ff7a59"/><circle cx="98" cy="76" r="3" fill="#04101f"/><ellipse class="swim" cx="125" cy="82" rx="14" ry="9" fill="rgba(255,255,255,.55)"/></g>' +
+    '<line x1="220" y1="40" x2="220" y2="70" stroke="#00e5ff" stroke-width="3"/><polygon points="220,38 215,48 225,48" fill="#00e5ff"/>' +
+    '<text x="200" y="90" class="lbl2">鳔胀大→V排↑</text><text x="200" y="108" class="lbl">浮力增大→上浮</text></svg>',
+  pendulum: '<svg viewBox="0 0 300 140">' + ANIM_STYLE +
+    '<circle cx="150" cy="14" r="3" fill="#9db4d8"/>' +
+    '<g class="swing" style="transform-origin:150px 14px"><line x1="150" y1="14" x2="150" y2="100" stroke="#9db4d8" stroke-width="2"/><circle cx="150" cy="104" r="12" fill="#4d8dff"/></g>' +
+    '<path d="M95 105 Q150 130 205 105" fill="none" stroke="#5f7699" stroke-width="1.5" stroke-dasharray="4 4"/>' +
+    '<text x="60" y="95" class="lbl2">势能大</text><text x="135" y="136" class="lbl2">动能最大</text><text x="212" y="95" class="lbl2">势能大</text></svg>',
+  lever: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<polygon points="150,95 138,115 162,115" fill="#9db4d8"/>' +
+    '<rect x="40" y="80" width="220" height="9" rx="4" fill="#4d8dff"/>' +
+    '<rect x="48" y="58" width="30" height="22" rx="3" fill="#ff7a59"/>' +
+    '<line x1="235" y1="84" x2="235" y2="120" stroke="#ffd166" stroke-width="3"/><polygon points="235,86 230,96 240,96" fill="#ffd166"/>' +
+    '<text x="48" y="50" class="lbl">阻力(石头)</text><text x="242" y="112" class="lbl">动力</text>' +
+    '<text x="120" y="45" class="lbl2">F₁L₁ = F₂L₂</text></svg>',
+  pulley: '<svg viewBox="0 0 300 140">' + ANIM_STYLE +
+    '<line x1="90" y1="12" x2="210" y2="12" stroke="#9db4d8" stroke-width="4"/>' +
+    '<circle class="spin" cx="150" cy="55" r="24" fill="none" stroke="#00e5ff" stroke-width="3"/>' +
+    '<line x1="126" y1="55" x2="126" y2="12" stroke="#cfe9ff" stroke-width="2"/><line x1="174" y1="55" x2="174" y2="12" stroke="#cfe9ff" stroke-width="2"/>' +
+    '<line x1="174" y1="79" x2="174" y2="110" stroke="#cfe9ff" stroke-width="2"/>' +
+    '<rect x="158" y="110" width="32" height="24" rx="3" fill="#ffd166"/>' +
+    '<line x1="126" y1="79" x2="126" y2="118" stroke="#ffd166" stroke-width="3"/><polygon points="126,120 121,110 131,110" fill="#ffd166"/>' +
+    '<text x="60" y="105" class="lbl2">F=G/2</text><text x="52" y="122" class="lbl">动滑轮省一半力</text><text x="200" y="95" class="lbl">G</text></svg>',
+  circuit: '<svg viewBox="0 0 300 140">' + ANIM_STYLE +
+    '<rect class="wire" x="60" y="30" width="180" height="80" rx="8"/>' +
+    '<rect class="wire-flow" x="60" y="30" width="180" height="80" rx="8"/>' +
+    '<line x1="120" y1="30" x2="145" y2="16" stroke="#7fd4ff" stroke-width="2.5"/><circle cx="120" cy="30" r="3" fill="#7fd4ff"/><circle cx="150" cy="30" r="3" fill="#7fd4ff"/>' +
+    '<rect x="195" y="22" width="30" height="16" rx="8" fill="none" stroke="#ffd166" stroke-width="2"/><circle cx="210" cy="30" r="8" fill="rgba(255,209,102,.25)" class="pulse"/>' +
+    '<g><line x1="82" y1="18" x2="82" y2="42" stroke="#ff5d73" stroke-width="3"/><line x1="92" y1="24" x2="92" y2="36" stroke="#ff5d73" stroke-width="2"/></g>' +
+    '<text x="66" y="14" class="lbl">电源</text><text x="112" y="12" class="lbl">开关</text><text x="228" y="34" class="lbl">灯泡</text>' +
+    '<text x="105" y="78" class="lbl2">电流方向：正极 → 负极</text></svg>',
+  dynamic: '<svg viewBox="0 0 300 140">' + ANIM_STYLE +
+    '<rect class="wire" x="50" y="30" width="200" height="80" rx="8"/>' +
+    '<circle cx="105" cy="30" r="14" fill="rgba(13,27,58,.9)" stroke="#00e5ff" stroke-width="2"/><text x="100" y="35" class="lbl2">A</text>' +
+    '<circle cx="105" cy="110" r="14" fill="rgba(13,27,58,.9)" stroke="#ffd166" stroke-width="2"/><text x="100" y="115" class="lbl2">V</text>' +
+    '<rect x="170" y="22" width="60" height="14" rx="4" fill="none" stroke="#b388ff" stroke-width="2"/>' +
+    '<g class="slider"><line x1="185" y1="16" x2="185" y2="42" stroke="#b388ff" stroke-width="3"/><polygon points="185,14 180,22 190,22" fill="#b388ff"/></g>' +
+    '<text x="150" y="72" class="lbl2">滑片移动 → 电阻变 → 电流变</text><text x="150" y="90" class="lbl">串联分压：电阻越大分压越多</text></svg>',
+  voltampere: '<svg viewBox="0 0 300 140">' + ANIM_STYLE +
+    '<rect class="wire" x="45" y="28" width="210" height="84" rx="8"/>' +
+    '<rect class="wire-flow" x="45" y="28" width="210" height="84" rx="8"/>' +
+    '<circle cx="110" cy="28" r="14" fill="rgba(13,27,58,.95)" stroke="#00e5ff" stroke-width="2"/><text x="105" y="33" class="lbl2">A</text>' +
+    '<circle cx="150" cy="112" r="14" fill="rgba(13,27,58,.95)" stroke="#ffd166" stroke-width="2"/><text x="145" y="117" class="lbl2">V</text>' +
+    '<rect x="180" y="20" width="34" height="16" rx="8" fill="none" stroke="#ff7a59" stroke-width="2"/><circle cx="197" cy="28" r="7" fill="rgba(255,122,89,.3)" class="pulse"/>' +
+    '<text x="84" y="70" class="lbl2">电流表串联</text><text x="84" y="88" class="lbl">电压表并联测灯泡</text><text x="170" y="60" class="lbl">R = U / I</text></svg>',
+  magnet: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<rect x="105" y="50" width="45" height="26" fill="#ff5d73"/><rect x="150" y="50" width="45" height="26" fill="#4d8dff"/>' +
+    '<text x="120" y="68" class="lbl" style="fill:#fff">N</text><text x="166" y="68" class="lbl" style="fill:#fff">S</text>' +
+    '<path class="pulse" d="M105 50 C 70 20, 230 20, 195 50" fill="none" stroke="#00e5ff" stroke-width="1.5"/>' +
+    '<path class="pulse" style="animation-delay:.5s" d="M105 76 C 60 115, 240 115, 195 76" fill="none" stroke="#00e5ff" stroke-width="1.5"/>' +
+    '<text x="118" y="112" class="lbl2">磁感线：N 极出发回到 S 极</text></svg>',
+  emagnet: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<rect x="110" y="48" width="90" height="22" rx="10" fill="#9db4d8"/>' +
+    '<path d="M112 59 q6 -14 12 0 q6 -14 12 0 q6 -14 12 0 q6 -14 12 0 q6 -14 12 0 q6 -14 12 0 q6 -14 12 0" fill="none" stroke="#ffd166" stroke-width="2.5"/>' +
+    '<line x1="112" y1="70" x2="80" y2="100" stroke="#7fd4ff" stroke-width="2"/><line x1="198" y1="70" x2="230" y2="100" stroke="#7fd4ff" stroke-width="2"/>' +
+    '<rect x="78" y="100" width="44" height="14" rx="3" fill="none" stroke="#ff5d73" stroke-width="2"/><line x1="94" y1="100" x2="94" y2="114" stroke="#ff5d73" stroke-width="2.5"/><line x1="106" y1="100" x2="106" y2="114" stroke="#ff5d73" stroke-width="1.5"/>' +
+    '<text x="60" y="36" class="lbl2">电流越大、匝数越多 → 磁性越强</text></svg>',
+  motor: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<rect x="55" y="35" width="18" height="60" fill="#ff5d73"/><rect x="227" y="35" width="18" height="60" fill="#4d8dff"/>' +
+    '<text x="59" y="30" class="lbl" style="fill:#ff8fa0">N</text><text x="231" y="30" class="lbl" style="fill:#7fd4ff">S</text>' +
+    '<g class="spin"><rect x="125" y="50" width="50" height="30" fill="none" stroke="#ffd166" stroke-width="3"/></g>' +
+    '<circle cx="150" cy="65" r="3" fill="#9db4d8"/>' +
+    '<text x="92" y="118" class="lbl2">通电线圈在磁场中受力转动</text><text x="196" y="118" class="lbl">电动机</text></svg>',
+  balance: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<rect x="120" y="60" width="60" height="40" rx="4" fill="#4d8dff"/>' +
+    '<line x1="150" y1="60" x2="150" y2="22" stroke="#00e5ff" stroke-width="3"/><polygon points="150,20 145,30 155,30" fill="#00e5ff"/>' +
+    '<line x1="150" y1="100" x2="150" y2="126" stroke="#ffd166" stroke-width="3"/><polygon points="150,128 145,118 155,118" fill="#ffd166"/>' +
+    '<line x1="40" y1="100" x2="260" y2="100" stroke="#9db4d8" stroke-width="2.5"/>' +
+    '<text x="158" y="34" class="lbl2">支持力 F</text><text x="158" y="122" class="lbl2">重力 G</text>' +
+    '<text x="36" y="40" class="lbl">二力平衡：同体·等大·反向·共线</text></svg>',
+  friction: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<line x1="30" y1="95" x2="270" y2="95" stroke="#9db4d8" stroke-width="2.5"/>' +
+    '<path d="M30 98 l12 6 M60 98 l12 6 M90 98 l12 6 M120 98 l12 6 M150 98 l12 6 M180 98 l12 6 M210 98 l12 6 M240 98 l12 6" stroke="#5f7699" stroke-width="1.5"/>' +
+    '<rect x="110" y="60" width="70" height="35" rx="4" fill="#b388ff"/>' +
+    '<line x1="180" y1="77" x2="225" y2="77" stroke="#ffd166" stroke-width="3"/><polygon points="227,77 217,72 217,82" fill="#ffd166"/>' +
+    '<line x1="110" y1="77" x2="72" y2="77" stroke="#ff5d73" stroke-width="3"/><polygon points="70,77 80,72 80,82" fill="#ff5d73"/>' +
+    '<text x="230" y="70" class="lbl">拉力</text><text x="36" y="70" class="lbl2">摩擦力 f</text>' +
+    '<text x="86" y="120" class="lbl">f 与压力、接触面粗糙程度有关</text></svg>',
+  frame: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<rect x="40" y="80" width="120" height="30" rx="6" fill="#4d8dff"/><circle cx="70" cy="112" r="9" fill="#0a1830" stroke="#9db4d8" stroke-width="2"/><circle cx="130" cy="112" r="9" fill="#0a1830" stroke="#9db4d8" stroke-width="2"/>' +
+    '<g class="pulse"><line x1="170" y1="95" x2="210" y2="95" stroke="#00e5ff" stroke-width="3"/><polygon points="212,95 202,90 202,100" fill="#00e5ff"/></g>' +
+    '<line x1="240" y1="60" x2="240" y2="120" stroke="#9db4d8" stroke-width="3"/><circle cx="240" cy="52" r="7" fill="#ffd166"/>' +
+    '<text x="176" y="80" class="lbl2">车在动</text><text x="218" y="50" class="lbl">树不动</text>' +
+    '<text x="70" y="40" class="lbl2">选不同参照物，运动状态不同</text></svg>',
+  joule: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<rect class="wire" x="55" y="30" width="190" height="70" rx="8"/>' +
+    '<path d="M135 30 q5 -10 10 0 q5 -10 10 0 q5 -10 10 0" fill="none" stroke="#ff7a59" stroke-width="3"/>' +
+    '<path class="heatwave" d="M140 22 q4 -8 0 -14" fill="none" stroke="#ff7a59" stroke-width="2"/><path class="heatwave" style="animation-delay:.6s" d="M152 22 q4 -8 0 -14" fill="none" stroke="#ff7a59" stroke-width="2"/><path class="heatwave" style="animation-delay:1.2s" d="M164 22 q4 -8 0 -14" fill="none" stroke="#ff7a59" stroke-width="2"/>' +
+    '<text x="96" y="70" class="lbl2">Q = I² R t</text><text x="180" y="70" class="lbl">电热丝</text><text x="100" y="120" class="lbl">串联电流相同，电阻越大产热越多</text></svg>',
+  power: '<svg viewBox="0 0 300 130">' + ANIM_STYLE +
+    '<circle cx="150" cy="62" r="30" fill="rgba(255,209,102,.12)" stroke="#ffd166" stroke-width="2"/>' +
+    '<path d="M150 44 q-10 10 0 14 q10 4 0 20" fill="none" stroke="#ffd166" stroke-width="3"/>' +
+    '<path class="pulse" d="M110 62 A 40 40 0 0 1 190 62" fill="none" stroke="#00e5ff" stroke-width="1.5" stroke-dasharray="4 4"/>' +
+    '<text x="72" y="110" class="lbl2">P = UI = W/t</text><text x="182" y="110" class="lbl">1 度 = 1 kW·h</text>' +
+    '<text x="112" y="24" class="lbl">亮度由实际功率决定</text></svg>'
+};
+
+/* ---------- 事件绑定与初始化 ---------- */
+function bindGlobal() {
+  $$("nav button").forEach(b => b.addEventListener("click", () => showView(b.dataset.go)));
+  document.addEventListener("click", e => {
+    const go = e.target.closest("[data-go]");
+    if (go) { showView(go.dataset.go); return; }
+  });
+  $("#checkinBtn").addEventListener("click", doCheckin);
+  $("#mask").addEventListener("click", closeSheet);
+  /* 同步页 */
+  $("#syncSave").addEventListener("click", async () => {
+    const btn = $("#syncSave");
+    const repo = $("#inRepo").value.trim(), token = $("#inToken").value.trim(), file = $("#inFile").value.trim() || "progress.json";
+    if (!repo || !token) { toast("请填写仓库和 Token"); return; }
+    if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repo)) { toast("仓库格式应为：用户名/仓库名"); return; }
+    syncCfg = { repo, token, file }; cloudSha = null;
+    lsSet(LS_SYNC, JSON.stringify(syncCfg));
+    btn.disabled = true; btn.textContent = "连接 GitHub 中…";
+    renderSyncStatus("正在连接并推送进度…", "info");
+    try {
+      const remote = await ghPull();
+      if (remote && mergeState(remote)) lsSet(LS_KEY, JSON.stringify(state));
+      await ghPush();
+      renderSyncStatus("✔ 同步成功！其他设备打开本页面后填同样的仓库和 Token，点「拉取云端」即可共享进度。", "ok");
+      setSyncChip(true); renderDynamic();
+      toast("同步成功 ☁");
+    } catch (err) {
+      renderSyncStatus("✘ 同步失败：" + ghErrText(err), "err");
+      setSyncChip(false);
+      toast("同步失败：" + ghErrText(err));
+    } finally {
+      btn.disabled = false; btn.textContent = "保存并同步";
+    }
+  });
+  $("#syncPull").addEventListener("click", async () => {
+    if (!syncCfg || !syncCfg.repo || !syncCfg.token) { toast("请先保存同步配置"); return; }
+    renderSyncStatus("正在拉取云端进度…", "info");
+    try {
+      const remote = await ghPull();
+      if (!remote) { renderSyncStatus("云端还没有进度文件，点「保存并同步」先上传一次。", "info"); return; }
+      mergeState(remote); lsSet(LS_KEY, JSON.stringify(state));
+      renderSyncStatus("✔ 已拉取云端最新进度。", "ok");
+      renderDynamic(); renderSyncPage();
+      if (curView === "home") renderHome();
+    } catch (err) {
+      renderSyncStatus("✘ 拉取失败：" + ghErrText(err), "err");
+    }
+  });
+  $("#syncClear").addEventListener("click", () => {
+    syncCfg = null; cloudSha = null; lsDel(LS_SYNC);
+    $("#inRepo").value = ""; $("#inToken").value = "";
+    setSyncChip(false); renderSyncPage(); toast("已清除同步配置，回到本地模式");
+  });
+}
+function buildStars() {
+  const box = $("#stars"); let html = "";
+  for (let i = 0; i < 70; i++) {
+    const s = (Math.random() * 2 + 1).toFixed(1);
+    html += '<i style="left:' + (Math.random() * 100).toFixed(1) + "%;top:" + (Math.random() * 100).toFixed(1) + "%;width:" + s + "px;height:" + s + "px;--d:" + (Math.random() * 3 + 2).toFixed(1) + 's"></i>';
+  }
+  box.innerHTML = html;
+}
+async function init() {
+  buildStars();
+  loadState(); loadSyncCfg();
+  bindGlobal();
+  $("#examNote").textContent = EXAM_SOURCE_NOTE;
+  setSyncChip(false);
+  renderHome();
+  if (syncCfg && syncCfg.repo && syncCfg.token) {
+    try {
+      const remote = await ghPull();
+      if (remote && mergeState(remote)) { lsSet(LS_KEY, JSON.stringify(state)); renderHome(); }
+      setSyncChip(true);
+    } catch (e) { setSyncChip(false); }
+  }
+}
+init();
+})();
+
+
+</script>
+</body>
+</html>
